@@ -1,0 +1,554 @@
+/* Unbored - Modernes Design */
+:root {
+    --card-min-h: 100%;
+    --primary-color: #4361ee;
+    --secondary-color: #3a0ca3;
+    --success-color: #4cc9f0;
+    --warning-color: #f72585;
+    --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Globale Styles */
+body {
+    background-color: #f8f9fa;
+    color: #212529;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar-dark.bg-primary {
+    background-color: var(--primary-color) !important;
+    border: none;
+}
+
+.navbar-brand {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* Start Screen Styles */
+#startScreen {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-section {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.hero-section h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+}
+
+.hero-section .lead {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+/* Category Cards */
+.category-card {
+    transition: all 0.3s ease;
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    border: 1px solid #e9ecef;
+    height: 100%;
+}
+
+.category-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(67, 97, 238, 0.15) !important;
+    border-color: var(--primary-color);
+}
+
+.category-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.category-card[data-category="movies"] .category-icon {
+    color: var(--primary-color);
+}
+
+.category-card[data-category="games"] .category-icon {
+    color: var(--warning-color);
+}
+
+.category-card[data-category="outdoor"] .category-icon {
+    color: var(--success-color);
+}
+
+.category-stats {
+    margin-top: 1rem;
+}
+
+.category-stats .badge {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #e9ecef;
+}
+
+/* Quick Random Button */
+#quickRandomBtn {
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    background: var(--primary-color);
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    color: white;
+}
+
+#quickRandomBtn:hover {
+    transform: scale(1.05);
+    background: var(--secondary-color);
+}
+
+/* Karten für Aktivitäten */
+.card.activity {
+    min-height: var(--card-min-h);
+    border: none;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    background: white;
+    color: #212529;
+}
+
+.card.activity:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+/* Klickbare Badges (Kategorien) */
+.badge-click {
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #e9ecef;
+    display: inline-block;
+}
+
+.badge-click:hover {
+    transform: translateY(-2px);
+}
+
+.badge-click.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* Activity Grid */
+#activityGrid .card-body .badge {
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.75rem;
+}
+
+/* Custom Cards */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    color: #212529;
+    border: 1px solid #e9ecef;
+}
+
+.card-header {
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+}
+
+/* Activity Rating Stars */
+.star-rating {
+    display: inline-flex;
+    gap: 2px;
+}
+
+.star-rating .bi-star-fill {
+    color: #ffc107;
+}
+
+.star-rating .bi-star {
+    color: #dee2e6;
+}
+
+/* Category-specific colors */
+.category-movies {
+    background-color: rgba(67, 97, 238, 0.1) !important;
+    color: var(--primary-color) !important;
+}
+
+.category-games {
+    background-color: rgba(247, 37, 133, 0.1) !important;
+    color: var(--warning-color) !important;
+}
+
+.category-outdoor {
+    background-color: rgba(76, 201, 240, 0.1) !important;
+    color: var(--success-color) !important;
+}
+
+/* Tag badges */
+.badge-tag {
+    background: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #e9ecef;
+    font-weight: normal;
+}
+
+/* Player count badges */
+.badge-players {
+    background: rgba(76, 201, 240, 0.1);
+    color: var(--success-color);
+    border: 1px solid rgba(76, 201, 240, 0.3);
+}
+
+/* Playlist items */
+.playlist-item {
+    border-left: 3px solid var(--primary-color);
+    transition: all 0.2s ease;
+    background: #f8f9fa;
+}
+
+.playlist-item:hover {
+    background: rgba(67, 97, 238, 0.05);
+}
+
+/* Empty state styling */
+.empty-state {
+    padding: 3rem 1rem;
+    color: #6c757d;
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* Activity description */
+.activity-description {
+    font-size: 0.875rem;
+    color: #6c757d;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+    background: white;
+    border: 1px solid #ced4da;
+    color: #212529;
+}
+
+.form-control:focus, .form-select:focus {
+    background: white;
+    border-color: var(--primary-color);
+    color: #212529;
+    box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+}
+
+.form-control::placeholder {
+    color: #6c757d;
+}
+
+.form-text {
+    color: #6c757d !important;
+}
+
+/* Custom Range Input - Vereinfacht für Safari */
+.form-range {
+    height: 6px;
+    width: 100%;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: white;
+}
+
+/* Activity card footer */
+.activity-footer {
+    border-top: 1px solid #e9ecef;
+    padding-top: 1rem;
+    margin-top: auto;
+}
+
+/* Back button */
+#backToStart {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    color: #6c757d;
+}
+
+#backToStart:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+/* Modal */
+.modal-content {
+    background: white;
+    color: #212529;
+    border: 1px solid #e9ecef;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+}
+
+/* Checkbox styling */
+.form-check-input {
+    background-color: white;
+    border: 1px solid #ced4da;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.form-check-label {
+    color: #212529;
+}
+
+/* Filter Einklapp-Animation */
+.filters-collapsed .card-body {
+    display: none;
+}
+
+.filters-collapsed .bi-chevron-down {
+    transform: rotate(-90deg);
+}
+
+#toggleFilters {
+    transition: all 0.3s ease;
+    border: none;
+    background: transparent;
+    padding: 0.25rem 0.5rem;
+    color: #6c757d;
+}
+
+#toggleFilters:hover {
+    background: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+}
+
+#toggleFilters .bi-chevron-down {
+    transition: transform 0.3s ease;
+}
+
+/* Filter Scrollbereich */
+#filters {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Dark mode adjustments */
+[data-bs-theme="dark"] body {
+    background-color: #1a1d23;
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .card {
+    background-color: #2d3748;
+    border-color: #4a5568;
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .card-header {
+    background-color: #2d3748;
+    border-bottom-color: #4a5568;
+}
+
+[data-bs-theme="dark"] .card.activity {
+    background-color: #2d3748;
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .category-card {
+    background: #2d3748;
+    border-color: #4a5568;
+}
+
+[data-bs-theme="dark"] .badge-tag {
+    background-color: #4a5568;
+    color: #e2e8f0;
+    border-color: #718096;
+}
+
+[data-bs-theme="dark"] .badge-players {
+    background-color: #1b5e20;
+    color: #a5d6a7;
+    border-color: #2e7d32;
+}
+
+[data-bs-theme="dark"] .empty-state {
+    color: #a0aec0;
+}
+
+[data-bs-theme="dark"] .activity-description {
+    color: #a0aec0;
+}
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+    background-color: #2d3748;
+    border-color: #4a5568;
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+    background-color: #2d3748;
+    border-color: var(--primary-color);
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .playlist-item {
+    background: #2d3748;
+}
+
+[data-bs-theme="dark"] .badge-click {
+    background: #4a5568;
+    color: #e2e8f0;
+    border-color: #718096;
+}
+
+[data-bs-theme="dark"] .badge-click.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .category-card:hover {
+        transform: none;
+    }
+
+    .card.activity:hover {
+        transform: none;
+    }
+
+    #filtersBody {
+        max-height: none;
+    }
+
+    .filters-collapsed .card-body {
+        display: block !important;
+    }
+
+    #toggleFilters {
+        display: none;
+    }
+}
+
+/* Animation for random modal */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-content {
+    animation: fadeInUp 0.3s ease;
+}
+
+/* Screen transitions */
+.screen-transition {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Safari-spezifische Fixes */
+@supports (-webkit-touch-callout: none) {
+    /* Safari-spezifische Styles */
+    .category-card {
+        -webkit-transform: translateZ(0);
+    }
+
+    .card.activity {
+        -webkit-transform: translateZ(0);
+    }
+}
+
+/* Fallback für ältere Browser */
+.category-card, .card.activity {
+    transform: translateZ(0);
+}
