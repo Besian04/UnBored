@@ -6,7 +6,7 @@ class ActivityRepository {
     }
 
     getActivityByType(type) {
-        foundActivityList = this.activityList.filter(x => x.type === type)
+        let foundActivityList = this.activityList.filter(x => x.type === type)
 
         if (foundActivityList.length < 1) {
             return "no activities with given type found";
@@ -20,8 +20,8 @@ class ActivityRepository {
     }
 
     deleteActivity(targetId) {
-        foundActivity = this.activityList.find(x => x.id === targetId);
-        foundActivityIndex = this.activityList.findIndex(x => x.id === targetId);
+        let foundActivity = this.activityList.find(x => x.id === targetId);
+        let foundActivityIndex = this.activityList.findIndex(x => x.id === targetId);
 
         if (foundActivity === undefined) {
             return "Activity not found";
