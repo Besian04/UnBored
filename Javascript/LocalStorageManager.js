@@ -1,4 +1,10 @@
 class LocalStorageManager {
+    activityRepository;
+
+    constructor(activityRepository) {
+        this.activityRepository = activityRepository;
+    }
+
     getStoredData() {
         console.log(localStorage.getItem("userData"))
         return localStorage.getItem("userData")
@@ -10,6 +16,11 @@ class LocalStorageManager {
 
     overwriteStoredData() {
 
+    }
+
+    updateLocalStorage() {
+        localStorage.setItem("userData", JSON.stringify(this.activityRepository.getActivityList()))
+        this.getStoredData()
     }
 
     checkIfDataAlreadyExistsInLocalStorage() {
@@ -41,6 +52,12 @@ class LocalStorageManager {
         } catch (error) {
             console.error('Error importing standard data:', error);
         }
+
+        this.sendLocalDataToRepository()
+    }
+
+    sendLocalDataToRepository() {
+        this.activityRepository.activityList = JSON.parse(localStorage.getItem("userData"))
     }
 
     getStandardData() {

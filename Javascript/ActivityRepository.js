@@ -1,5 +1,10 @@
 class ActivityRepository {
     activityList = []
+    localStorageManager;
+
+    constructor(localStorage) {
+        this.localStorageManager = localStorage
+    }
 
     getActivityList() {
         return this.activityList
@@ -15,7 +20,7 @@ class ActivityRepository {
         }
     }
 
-    addActivity(activity) {
+    addActivityToRepository(activity) {
         this.activityList.push(activity)
     }
 

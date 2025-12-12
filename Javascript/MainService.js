@@ -1,8 +1,8 @@
+let userInstance;
+
 window.addEventListener("load", (event) => {
-    //initiate objects
-    let user = new User
-
-
+    userInstance = new User();
+    console.log(userInstance.testInt)
 
 
     //load base activities into manager (check beforehand if local data already exists)
