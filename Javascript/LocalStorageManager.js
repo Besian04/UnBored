@@ -6,7 +6,6 @@ class LocalStorageManager {
     }
 
     getStoredData() {
-        console.log(localStorage.getItem("userData"))
         return localStorage.getItem("userData")
     }
 
@@ -42,7 +41,7 @@ class LocalStorageManager {
     }
 
     importDataFromLocalStorage() {
-
+        this.sendLocalDataToRepository()
     }
 
     importStandardData() {
@@ -57,7 +56,7 @@ class LocalStorageManager {
     }
 
     sendLocalDataToRepository() {
-        this.activityRepository.activityList = JSON.parse(localStorage.getItem("userData"))
+        this.activityRepository.activityList = JSON.parse(this.getStoredData())
     }
 
     getStandardData() {

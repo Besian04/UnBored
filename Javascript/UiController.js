@@ -1,10 +1,10 @@
 class UiController {
     activityForm;
-    user;
+    activityRepository;
 
-    constructor() {
+    constructor(activityRepository) {
+        this.activityRepository = activityRepository
         this.activityForm = document.getElementById("activityForm")
-
     }
 
     getActivityInput() {
@@ -27,6 +27,35 @@ class UiController {
             values.link,
             values.image
         )
+    }
+
+    loadCategories() {
+        let categoryDiv = document.getElementById("categories")
+        for (let category of this.activityRepository.getCategoryList()) {
+            let heading = document.createElement("h2")
+            heading.innerHTML = category
+            categoryDiv.append(heading)
+
+            let activityContainer = document.createElement("div")
+            categoryDiv.append(activityContainer)
+            this.loadActivitiesIntoCategory(activityContainer, category)
+        }
+
+    }
+
+    loadActivitiesIntoCategory(domElement, categoryName) {
+        let activityList = this.activityRepository.getActivityByType(categoryName)
+        console.log(activityList)
+        for (let activity of activityList) {
+            let name = document.createElement("p")
+            name.innerHTML = activity.name
+            domElement.append(name)
+        }
+
+    }
+
+    loadActivitiesIntoCategories() {
+
     }
 
 

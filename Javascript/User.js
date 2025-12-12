@@ -10,7 +10,7 @@ class User {
 
         this.activityRepository = new ActivityRepository();
         this.localStorageManager = new LocalStorageManager(this.activityRepository);
-        this.uiController = new UiController(this);
+        this.uiController = new UiController(this.activityRepository);
 
         this.loadUser();
     }

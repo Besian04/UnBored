@@ -10,6 +10,11 @@ class ActivityRepository {
         return this.activityList
     }
 
+    getCategoryList() {
+        return [...new Set(this.getActivityList().map(activity => activity.type))];
+
+    }
+
     getActivityByType(type) {
         let foundActivityList = this.activityList.filter(x => x.type === type)
 

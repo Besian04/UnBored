@@ -2,12 +2,11 @@ let userInstance;
 
 window.addEventListener("load", (event) => {
     userInstance = new User();
-    console.log(userInstance.testInt)
+
+    userInstance.uiController.loadCategories()
 
 
     //load base activities into manager (check beforehand if local data already exists)
-    
-
     //load user settings
 
     //load playlists
