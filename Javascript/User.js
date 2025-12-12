@@ -4,13 +4,14 @@ class User {
     activityRepository;
     localStorageManager;
     uiController;
-    testInt;
 
     constructor() {
 
         this.activityRepository = new ActivityRepository();
         this.localStorageManager = new LocalStorageManager(this.activityRepository);
         this.uiController = new UiController(this.activityRepository);
+
+        this.activityRepository.localStorageManager = this.localStorageManager
 
         this.loadUser();
     }
@@ -24,11 +25,11 @@ class User {
             console.log("loading from standard data");
         }
 
-        this.localStorageManager.getStoredData();
 
         this.uiController.activityForm.addEventListener("submit", e => {
             e.preventDefault();
             this.addActivity(this.uiController.getActivityInput())
+            this.uiController.reloadUi()
         });
     }
 

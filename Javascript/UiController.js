@@ -2,9 +2,17 @@ class UiController {
     activityForm;
     activityRepository;
 
+
     constructor(activityRepository) {
         this.activityRepository = activityRepository
         this.activityForm = document.getElementById("activityForm")
+    }
+
+    reloadUi() {
+        let categoryDiv = document.getElementById("categories")
+
+        categoryDiv.replaceChildren()
+        this.loadCategories()
     }
 
     getActivityInput() {
@@ -31,10 +39,12 @@ class UiController {
 
     loadCategories() {
         let categoryDiv = document.getElementById("categories")
+
         for (let category of this.activityRepository.getCategoryList()) {
             let heading = document.createElement("h2")
             heading.innerHTML = category
             categoryDiv.append(heading)
+            heading.classList.add("header", "hello")
 
             let activityContainer = document.createElement("div")
             categoryDiv.append(activityContainer)
@@ -48,15 +58,20 @@ class UiController {
         console.log(activityList)
         for (let activity of activityList) {
             let name = document.createElement("p")
+            let deleteButton = document.createElement("button")
+            deleteButton.id = "delete" + activity.id
+            deleteButton.addEventListener("click", () => {
+                this.activityRepository.deleteActivity(activity.id)
+                this.reloadUi()
+            })
+
             name.innerHTML = activity.name
             domElement.append(name)
+            name.append(deleteButton)
         }
 
     }
 
-    loadActivitiesIntoCategories() {
-
-    }
 
 
 }

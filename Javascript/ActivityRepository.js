@@ -12,7 +12,6 @@ class ActivityRepository {
 
     getCategoryList() {
         return [...new Set(this.getActivityList().map(activity => activity.type))];
-
     }
 
     getActivityByType(type) {
@@ -37,6 +36,7 @@ class ActivityRepository {
             return "Activity not found";
         } else {
             this.activityList.splice(foundActivityIndex, 1);
+            this.localStorageManager.updateLocalStorage()
             return "removed index:" + foundActivityIndex +" id: " + foundActivity.id + " name: " + foundActivity.name
         }
     }
