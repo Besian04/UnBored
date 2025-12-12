@@ -72,6 +72,41 @@ class UiController {
 
     }
 
+    loadButtons() {
+        //add activity button
+        this.activityForm.addEventListener("submit", e => {
+            e.preventDefault();
+            this.activityRepository.addActivityToRepository(this.getActivityInput())
+            this.reloadUi()
+        });
+
+        //load random activity button
+        let button = document.getElementById("randomActivityButton")
+        button.innerHTML = "random activity"
+        button.addEventListener("click", () => {
+            let activity = this.activityRepository.suggestionService.getRandomActivity();
+            document.getElementById("randomActivity").append(this.outputFullActivityAsDiv(activity))
+        });
+    }
+
+    outputFullActivityAsDiv(activity) {
+        let activityContainer = document.createElement("div")
+        let name = document.createElement("div")
+        let description = document.createElement("div")
+        let time = document.createElement("div")
+        let link = document.createElement("a")
+        let image = document.createElement("img")
+
+        name.innerHTML = activity.name
+        description.innerHTML = activity.description
+        time.innerHTML = activity.time
+        link.innerHTML = activity.link
+        image.innerHTML = activity.image
+
+        activityContainer.append(name, description, time, link, image)
+        return activityContainer
+    }
+
 
 
 }

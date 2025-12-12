@@ -1,9 +1,11 @@
 class ActivityRepository {
     activityList = []
     localStorageManager;
+    suggestionService;
 
     constructor(localStorage) {
         this.localStorageManager = localStorage
+        this.suggestionService = new SuggestionService(this)
     }
 
     getActivityList() {
