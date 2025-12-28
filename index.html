@@ -1,30 +1,252 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html class="dark" lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title></title>
-  <script src="Javascript/MainService.js"></script>
-  <script src="Javascript/LocalStorageManager.js"></script>
-  <script src="Javascript/ActivityRepository.js"></script>
-  <script src="Javascript/Activity.js"></script>
-  <script src="Javascript/UiController.js"></script>
-  <script src="Javascript/User.js"></script>
-  <script src="Javascript/SuggestionService.js"></script>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Unbored Dashboard</title>
+
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700&display=swap" rel="stylesheet"/>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#ee9d2b",
+            "primary-hover": "#d98b20",
+            "background-light": "#f8f7f6",
+            "background-dark": "#221a10",
+            "surface-dark": "#2d2418",
+            "surface-darker": "#1a140d",
+            "accent-teal": "#4e8c8c",
+            "border-dark": "#483923",
+            "text-secondary": "#c9b292",
+          },
+          fontFamily: { "display": ["Be Vietnam Pro", "sans-serif"] },
+          borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+        },
+      },
+    }
+  </script>
+
+  <!-- JS (deferred, damit DOM da ist) -->
+  <script defer src="Javascript/Activity.js"></script>
+  <script defer src="Javascript/LocalStorageManager.js"></script>
+  <script defer src="Javascript/ActivityRepository.js"></script>
+  <script defer src="Javascript/User.js"></script>
+  <script defer src="Javascript/SuggestionService.js"></script>
+  <script defer src="Javascript/UiController.js"></script>
+  <script defer src="Javascript/MainService.js"></script>
 </head>
-<body>
-    <h1>Unbored</h1>
-    <div id="addActivityForm">
-      <form id="activityForm">
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-hidden h-screen flex flex-col font-display">
+
+<header class="flex-none flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#483923] bg-white dark:bg-surface-darker px-6 py-3 z-20">
+  <div class="flex items-center gap-8">
+    <div class="flex items-center gap-3 text-slate-900 dark:text-white">
+      <div class="size-8 text-primary flex items-center justify-center">
+        <span class="material-symbols-outlined text-3xl">local_activity</span>
+      </div>
+      <h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Unbored</h2>
+    </div>
+
+    <label class="flex flex-col min-w-40 !h-10 max-w-64 hidden md:flex">
+      <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+        <div class="text-slate-500 dark:text-[#c9b292] flex border-none bg-slate-100 dark:bg-[#483923] items-center justify-center pl-4 rounded-l-lg border-r-0">
+          <span class="material-symbols-outlined text-xl">search</span>
+        </div>
+        <input id="searchInput"
+               class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-100 dark:bg-[#483923] focus:border-none h-full placeholder:text-slate-500 dark:placeholder:text-[#c9b292] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal leading-normal"
+               placeholder="Find an activity..."
+               value=""
+        />
+      </div>
+    </label>
+  </div>
+
+  <div class="flex gap-3">
+    <button class="flex items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-slate-100 dark:bg-[#483923] hover:bg-slate-200 dark:hover:bg-[#5a4a32] text-slate-900 dark:text-white transition-colors" title="Settings">
+      <span class="material-symbols-outlined text-xl">settings</span>
+    </button>
+  </div>
+</header>
+
+<div class="flex flex-1 overflow-hidden">
+  <!-- SIDEBAR -->
+  <aside class="hidden md:flex flex-col w-64 bg-white dark:bg-surface-darker border-r border-slate-200 dark:border-[#483923] flex-none">
+    <div class="flex flex-col gap-4 p-4">
+
+      <div class="flex flex-col gap-2">
+        <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:bg-[#483923] dark:text-white group transition-all" href="#">
+          <span class="material-symbols-outlined text-2xl group-hover:scale-105 transition-transform">dashboard</span>
+          <p class="text-sm font-medium leading-normal">Dashboard</p>
+        </a>
+      </div>
+
+      <div class="h-px bg-slate-200 dark:bg-[#483923] my-2"></div>
+
+      <div class="px-3">
+        <h3 class="text-xs font-bold uppercase text-slate-400 dark:text-[#887050] mb-3 tracking-wider">Categories</h3>
+        <div id="sidebarCategories" class="flex flex-col gap-1">
+          <!-- wird per JS befüllt -->
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-auto p-4">
+      <div class="bg-primary/10 rounded-lg p-3 border border-primary/20">
+        <p class="text-xs text-primary font-medium flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm">cloud_off</span>
+          Local Mode
+        </p>
+        <p class="text-[10px] text-slate-500 dark:text-[#c9b292] mt-1">Your data is saved locally on this device.</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="flex-1 overflow-y-auto relative scroll-smooth">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-96 bg-primary/10 blur-[120px] rounded-full pointer-events-none z-0"></div>
+
+    <div class="max-w-[1000px] mx-auto p-6 md:p-10 relative z-10">
+
+      <div class="flex flex-col items-start justify-center py-10 md:py-14">
+        <h1 class="text-slate-900 dark:text-white text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em] mb-3">
+          Don't just sit there. <span class="text-primary">Do something.</span>
+        </h1>
+        <h2 class="text-slate-600 dark:text-[#c9b292] text-lg font-normal max-w-2xl">
+          Discover your next hobby, distraction, or adventure in seconds. No sign-up required.
+        </h2>
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-12">
+        <button id="btnRandom" class="md:col-span-6 group relative flex flex-row items-center justify-between p-8 rounded-2xl bg-primary text-[#2d2418] shadow-lg shadow-orange-500/20 hover:shadow-orange-500/30 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+          <div class="absolute right-0 top-0 h-full w-1/3 bg-white/10 skew-x-12 translate-x-4"></div>
+          <div class="flex flex-col items-start z-10">
+            <div class="flex items-center gap-2 mb-2 opacity-80">
+              <span class="material-symbols-outlined text-xl">casino</span>
+              <span class="text-xs font-bold uppercase tracking-wider">Instant Pick</span>
+            </div>
+            <h3 class="text-3xl font-bold text-white mb-2 text-left">Get Random Activity</h3>
+            <p class="text-sm text-white/90 text-left font-medium">Let fate decide your next adventure immediately.</p>
+          </div>
+          <div class="size-14 rounded-full bg-white/20 text-white flex items-center justify-center group-hover:bg-white group-hover:text-primary transition-colors z-10 shrink-0 ml-4">
+            <span class="material-symbols-outlined text-3xl">arrow_forward</span>
+          </div>
+        </button>
+
+        <button id="btnBrowse" class="md:col-span-3 group relative flex flex-col items-center justify-center p-6 rounded-2xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-[#483923] shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300">
+          <div class="size-12 rounded-full bg-slate-100 dark:bg-[#332819] text-slate-600 dark:text-[#c9b292] flex items-center justify-center mb-3 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">category</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Browse Categories</h3>
+          <p class="text-xs text-slate-500 dark:text-[#887050] text-center mt-1">Explore all</p>
+        </button>
+
+        <button id="btnAdd" class="md:col-span-3 group relative flex flex-col items-center justify-center p-6 rounded-2xl bg-white dark:bg-surface-dark border-2 border-dashed border-slate-300 dark:border-[#483923] shadow-sm hover:shadow-md hover:border-primary hover:bg-slate-50 dark:hover:bg-[#2d2418] transition-all duration-300">
+          <div class="size-12 rounded-full bg-slate-100 dark:bg-[#332819] text-slate-600 dark:text-[#c9b292] flex items-center justify-center mb-3 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-2xl">edit_document</span>
+          </div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">Open Form</h3>
+          <p class="text-xs text-slate-500 dark:text-[#887050] text-center mt-1">Submit activity</p>
+        </button>
+      </div>
+
+      <!-- LIST -->
+      <div class="flex flex-col gap-6">
+        <div class="flex items-center justify-between px-1">
+          <div>
+            <h3 class="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Highly Rated</h3>
+            <p class="text-sm text-slate-500 dark:text-[#c9b292]">Your local favorites (based on rating).</p>
+          </div>
+        </div>
+
+        <div id="highlyRatedList" class="flex flex-col gap-4">
+          <!-- wird per JS befüllt -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- ================= MODAL: RANDOM ================= -->
+<div id="modalRandom" class="hidden fixed inset-0 z-50">
+  <div class="absolute inset-0 bg-black/60"></div>
+  <div class="relative w-full h-full flex items-center justify-center p-4">
+    <div class="w-full max-w-2xl bg-white dark:bg-surface-dark border border-[#483923] rounded-2xl p-6">
+      <div class="flex items-start justify-between gap-4">
         <div>
-          <label for="activityName">Name</label>
-          <input type="text" id="activityName" name="name" required>
+          <p class="text-xs font-bold uppercase tracking-wider text-primary">Random</p>
+          <h2 id="randomName" class="text-3xl font-black mt-1">—</h2>
+          <p id="randomDescription" class="text-slate-600 dark:text-[#c9b292] mt-2">—</p>
+          <div class="flex gap-4 mt-4 text-sm text-slate-500 dark:text-[#c9b292]">
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined text-base">schedule</span><span id="randomTime">—</span></div>
+            <div class="flex items-center gap-1"><span class="material-symbols-outlined text-base">star</span><span id="randomRating">—</span></div>
+          </div>
+        </div>
+
+        <button class="text-slate-500 hover:text-primary" data-close="modalRandom">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div class="flex gap-3 mt-6">
+        <button id="btnReroll" class="px-5 py-2 rounded-lg bg-primary text-[#221a10] font-bold hover:bg-primary-hover transition-colors flex items-center gap-2">
+          <span class="material-symbols-outlined text-base">refresh</span> Reroll
+        </button>
+        <button class="px-5 py-2 rounded-lg border border-[#483923] hover:border-primary transition-colors" data-close="modalRandom">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL: BROWSE ================= -->
+<div id="modalBrowse" class="hidden fixed inset-0 z-50">
+  <div class="absolute inset-0 bg-black/60"></div>
+  <div class="relative w-full h-full flex items-center justify-center p-4">
+    <div class="w-full max-w-5xl bg-background-dark border border-[#483923] rounded-2xl p-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-black text-white">Browse Activities</h2>
+        <button class="text-[#c9b292] hover:text-primary" data-close="modalBrowse">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <div id="browseGrid" class="mt-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <!-- wird per JS befüllt -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL: FORM ================= -->
+<div id="modalForm" class="hidden fixed inset-0 z-50">
+  <div class="absolute inset-0 bg-black/60"></div>
+  <div class="relative w-full h-full flex items-center justify-center p-4">
+    <div class="w-full max-w-xl bg-white dark:bg-surface-dark border border-[#483923] rounded-2xl p-6">
+      <div class="flex items-center justify-between">
+        <h2 class="text-2xl font-black">Add Activity</h2>
+        <button class="text-slate-500 hover:text-primary" data-close="modalForm">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form id="activityForm" class="mt-6 space-y-4">
+        <div>
+          <label class="text-sm font-bold">Name</label>
+          <input id="activityName" class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923] border-none text-slate-900 dark:text-white" required>
         </div>
 
         <div>
-          <label for="activityType">Type</label>
-          <select id="activityType" name="type" required>
+          <label class="text-sm font-bold">Type</label>
+          <select id="activityType" class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923] border-none text-slate-900 dark:text-white" required>
             <option value="music">Music</option>
             <option value="outdoor">Outdoor</option>
             <option value="game">Game</option>
@@ -34,38 +256,38 @@
         </div>
 
         <div>
-          <label for="activityDescription">Description</label>
-          <input type="text" id="activityDescription" name="description" required>
+          <label class="text-sm font-bold">Description</label>
+          <input id="activityDescription" class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923] border-none text-slate-900 dark:text-white" required>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm font-bold">Time</label>
+            <input type="time" id="activityTime" class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923] border-none text-slate-900 dark:text-white" required>
+          </div>
+          <div>
+            <label class="text-sm font-bold">Rating</label>
+            <input type="number" id="activityRating" min="1" max="5" class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923] border-none text-slate-900 dark:text-white" required>
+          </div>
         </div>
 
         <div>
-          <label for="activityTime">Time</label>
-          <input type="time" id="activityTime" name="time" required>
+          <label class="text-sm font-bold">Link</label>
+          <input type="url" id="activityLink" class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923] border-none text-slate-900 dark:text-white">
         </div>
 
         <div>
-          <label for="activityRating">Rating</label>
-          <input type="number" id="activityRating" name="rating" min="1" max="5" required>
+          <label class="text-sm font-bold">Image URL</label>
+          <input type="url" id="activityImage" class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923] border-none text-slate-900 dark:text-white">
         </div>
 
-        <div>
-          <label for="activityLink">Link</label>
-          <input type="url" id="activityLink" name="link">
-        </div>
-
-        <div>
-          <label for="activityImage">Image URL</label>
-          <input type="url" id="activityImage" name="image">
-        </div>
-
-        <button type="submit">Add Activity</button>
+        <button type="submit" class="w-full mt-2 px-5 py-3 rounded-lg bg-primary text-[#221a10] font-black hover:bg-primary-hover transition-colors">
+          Add Activity
+        </button>
       </form>
     </div>
-
-    <button id="randomActivityButton" onclick=""></button>
-    <div id="randomActivity"></div>
-
-    <div id="categories"></div>
+  </div>
+</div>
 
 </body>
 </html>

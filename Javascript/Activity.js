@@ -21,7 +21,7 @@ class Activity {
         this.link = link;
         this.image = image;
 
-        this.id = this.createRandomId
+        this.id = this.createRandomId()
     }
 
     createRandomId() {
@@ -31,7 +31,7 @@ class Activity {
     }
 
     changeRating(newRating) {
-        if (rating > 5) {
+        if (newRating > 5) {
             return "rating too high";
         } else {
             this.rating = newRating;
@@ -92,7 +92,7 @@ class ActivityGame {
     }
 }
 
-class ActivityMovie { 
+class ActivityMovie {
     constructor(type, name, description, time, rating, link, image) {
         this.setBaseVariables(type, name, description, time, rating)
 
