@@ -6,12 +6,12 @@ class User {
     uiController;
 
     constructor() {
-
         this.activityRepository = new ActivityRepository();
         this.localStorageManager = new LocalStorageManager(this.activityRepository);
-        this.uiController = new UiController(this.activityRepository);
 
-        this.activityRepository.localStorageManager = this.localStorageManager
+        this.activityRepository.localStorageManager = this.localStorageManager;
+
+        this.uiController = new UiController(this.activityRepository);
 
         this.loadUser();
     }
@@ -21,10 +21,10 @@ class User {
             this.localStorageManager.importDataFromLocalStorage();
             console.log("loading from local storage");
         } else {
-            this.localStorageManager.importStandardData(this.activityRepository);
+            this.localStorageManager.importStandardData();
             console.log("loading from standard data");
         }
 
-        this.uiController.loadButtons()
+        this.uiController.loadButtons();
     }
 }

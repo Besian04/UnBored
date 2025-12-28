@@ -3,20 +3,22 @@ class Activity {
     type = "no type";
     name = "no name";
     description = "no description"
-    time = "no time"
+    duration = 0   // CHANGED: was time
     rating = 0
     link = "no link"
     image = "no image"
 
-    constructor(type, name, description, time, rating, link, image) {
-        this.setBaseVariables(type, name, description, time, rating, link, image);
+    // CHANGED: parameter name time -> duration
+    constructor(type, name, description, duration, rating, link, image) {
+        this.setBaseVariables(type, name, description, duration, rating, link, image);
     }
 
-    setBaseVariables(type, name, description, time, rating, link, image) {
+    // CHANGED: parameter name time -> duration
+    setBaseVariables(type, name, description, duration, rating, link, image) {
         this.type = type;
         this.name = name;
         this.description = description;
-        this.time = time;
+        this.duration = duration;   // CHANGED: was this.time
         this.rating = rating;
         this.link = link;
         this.image = image;
@@ -55,8 +57,9 @@ class Activity {
         return this.description;
     }
 
-    getTime() {
-        return this.time;
+    // CHANGED: was getTime()
+    getDuration() {
+        return this.duration;
     }
 
     getRating() {
