@@ -103,4 +103,34 @@ function bindTopButtons() {
         });
     }
 
+    // Dark - Light Mode button
+    const btnTheme = document.getElementById("btnTheme");
+    if (btnTheme) {
+        btnTheme.addEventListener("click", () => {
+            const root = document.documentElement; // <html>
+            const isDark = root.classList.toggle("dark"); // togglet und gibt true/false zurück
+            localStorage.setItem("unboredTheme", isDark ? "dark" : "light");
+        });
+    }
+
+    // Language button
+    const btnLang = document.getElementById("btnLang");
+    if (btnLang) {
+        // initial label
+        btnLang.textContent = (window.LanguageService.getLang() || "en").toUpperCase();
+
+        btnLang.addEventListener("click", () => {
+            const next = window.LanguageService.getLang() === "en" ? "de" : "en";
+            window.LanguageService.setLang(next);
+
+            // update html lang + button label
+            document.documentElement.lang = next;
+            btnLang.textContent = next.toUpperCase();
+
+            // refresh UI texts that are created dynamically
+            userInstance.uiController.renderDashboard();
+            userInstance.uiController.refreshBrowseIfOpen(); // falls Browse/Search offen ist
+        });
+    }
+
 }

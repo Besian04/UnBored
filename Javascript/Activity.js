@@ -33,12 +33,14 @@ class Activity {
     }
 
     changeRating(newRating) {
-        if (newRating > 5) {
-            return "rating too high";
-        } else {
-            this.rating = newRating;
-            return "new rating = " + newRating;
-        }
+        const n = parseInt(newRating, 10);
+
+        if (isNaN(n)) return "rating invalid";
+        if (n < 0) return "rating too low";
+        if (n > 10) return "rating too high";
+
+        this.rating = n;
+        return "new rating = " + n;
     }
 
     getId() {

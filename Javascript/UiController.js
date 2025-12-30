@@ -13,6 +13,11 @@ class UiController {
         this.playlistForm = document.getElementById("playlistForm");
         this.currentModalActivity = null;
         this.playlistSelect = document.getElementById("playlistSelect");
+
+        this.sortBySelect = document.getElementById("sortBy");
+        this.sortOrderSelect = document.getElementById("sortOrder");
+        this.sortState = { by: "rating", order: "desc" };
+        this.currentBrowsePlaylistId = null;
     }
 
     // ====== FORM ======
@@ -34,7 +39,13 @@ class UiController {
             type: document.getElementById("activityType").value,
             description: document.getElementById("activityDescription").value.trim(),
             duration: durationMinutes, // NEU: Minuten
-            rating: parseInt(document.getElementById("activityRating").value, 10),
+            rating: (() => {
+                let r = parseInt(document.getElementById("activityRating").value, 10);
+                if (isNaN(r)) r = 0;
+                if (r < 0) r = 0;
+                if (r > 10) r = 10;
+                return r;
+            })(),
             link: document.getElementById("activityLink").value.trim(),
             image: document.getElementById("activityImage").value.trim()
         };
@@ -124,6 +135,20 @@ class UiController {
                     // wenn leer: wieder normal rendern (optional)
                     this.renderBrowse();
                 }
+            });
+        }
+
+        // ===== Sorting (Browse modal) =====
+        if (this.sortBySelect) {
+            this.sortBySelect.addEventListener("change", () => {
+                this.sortState.by = this.sortBySelect.value;
+                this.refreshBrowseIfOpen();
+            });
+        }
+        if (this.sortOrderSelect) {
+            this.sortOrderSelect.addEventListener("change", () => {
+                this.sortState.order = this.sortOrderSelect.value;
+                this.refreshBrowseIfOpen();
             });
         }
     }
@@ -249,8 +274,10 @@ class UiController {
         if (!grid) return;
 
         grid.innerHTML = "";
+        this.currentBrowsePlaylistId = playlistId;
 
-        const items = this.activityRepository.getActivitiesForPlaylist(playlistId) || [];
+        let items = this.activityRepository.getActivitiesForPlaylist(playlistId) || [];
+        items = this.sortItems(items);
 
         const title = document.getElementById("browseTitle");
         if (title) {
@@ -318,6 +345,53 @@ class UiController {
         document.getElementById("modalRandom")?.classList.add("hidden");
     }
 
+    refreshBrowseIfOpen() {
+        const modal = document.getElementById("modalBrowse");
+        const isOpen = modal && !modal.classList.contains("hidden");
+        if (!isOpen) return;
+
+        // Wenn der User gerade eine Playlist ansieht, behalten wir die Playlist-View bei
+        if (this.currentBrowsePlaylistId) {
+            this.renderBrowsePlaylist(this.currentBrowsePlaylistId);
+            return;
+        }
+
+        const searchInput = document.getElementById("searchInput");
+        const q = searchInput ? (searchInput.value || "") : "";
+        this.renderBrowse(null, q);
+    }
+
+    sortItems(items) {
+        const by = this.sortState?.by || "rating";
+        const order = this.sortState?.order || "desc";
+        const dir = order === "asc" ? 1 : -1;
+
+        const safeStr = (v) => String(v ?? "").toLowerCase();
+        const safeNum = (v) => {
+            const n = Number(v);
+            return isNaN(n) ? 0 : n;
+        };
+
+        const copy = [...(items || [])];
+
+        copy.sort((a, b) => {
+            let va, vb;
+
+            if (by === "name") { va = safeStr(a.name); vb = safeStr(b.name); }
+            else if (by === "type") { va = safeStr(a.type); vb = safeStr(b.type); }
+            else if (by === "duration") { va = safeNum(a.duration); vb = safeNum(b.duration); }
+            else { // rating default
+                va = safeNum(a.rating); vb = safeNum(b.rating);
+            }
+
+            if (va < vb) return -1 * dir;
+            if (va > vb) return 1 * dir;
+            return 0;
+        });
+
+        return copy;
+    }
+
     renderHighlyRated() {
         const list = document.getElementById("highlyRatedList");
         if (!list) return;
@@ -380,6 +454,7 @@ class UiController {
         if (!grid) return;
 
         grid.innerHTML = "";
+        this.currentBrowsePlaylistId = null;
 
         const q = String(searchQuery || "").trim().toLowerCase();
         const all = this.activityRepository.getActivityList() || [];
@@ -404,18 +479,22 @@ class UiController {
         // Titel setzen
         const title = document.getElementById("browseTitle");
         if (title) {
-            if (q) title.textContent = `Search: "${searchQuery}"`;
-            else if (filterType) title.textContent = `Browse: ${filterType}`;
-            else title.textContent = "Browse Activities";
+            if (q) {
+                title.textContent = window.LanguageService.t("search_title", { q: searchQuery });
+            } else {
+                title.textContent = window.LanguageService.t("browse_title");
+            }
         }
 
         if (items.length === 0) {
             const msg = document.createElement("div");
             msg.className = "text-[#c9b292] text-sm";
-            msg.textContent = "No matching activities found.";
+            msg.textContent = window.LanguageService.t("no_results");
             grid.appendChild(msg);
             return;
         }
+
+        items = this.sortItems(items);
 
         for (let a of items) {
             grid.appendChild(this.createBrowseCard(a));
@@ -424,7 +503,7 @@ class UiController {
 
     createBrowseCard(activity) {
         const card = document.createElement("article");
-        card.className = "group relative flex flex-col rounded-xl bg-surface-dark border border-[#483923] overflow-hidden hover:border-primary hover:shadow-[0_0_20px_rgba(238,157,43,0.15)] transition-all duration-300 hover:-translate-y-1";
+        card.className = "group relative flex flex-col rounded-xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-[#483923] overflow-hidden hover:border-primary hover:shadow-[0_0_20px_rgba(238,157,43,0.15)] transition-all duration-300 hover:-translate-y-1";
 
         const imgUrl = activity.image && activity.image.length > 5 ? activity.image : "";
         card.innerHTML = `
@@ -438,17 +517,17 @@ class UiController {
 
       <div class="flex flex-col flex-1 p-4 gap-3">
         <div class="flex justify-between items-start">
-          <h3 class="text-white text-lg font-bold leading-tight group-hover:text-primary transition-colors">${activity.name || "—"}</h3>
+         <h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight group-hover:text-primary transition-colors">${activity.name || "—"}</h3>
           <div class="flex items-center gap-1 text-primary text-sm font-bold">
             <span class="material-symbols-outlined text-[16px] fill-[1]">star</span>
             ${activity.rating || 0}
           </div>
         </div>
 
-        <p class="text-text-secondary text-xs font-medium">${activity.description || ""}</p>
+        <p class="text-slate-600 dark:text-text-secondary text-xs font-medium">${activity.description || ""}</p>
 
-        <button class="mt-auto w-full py-2.5 rounded-lg bg-background-dark border border-[#483923] text-white text-sm font-bold hover:bg-primary hover:text-background-dark hover:border-primary transition-all duration-300">
-          View Activity
+        <button class="mt-auto w-full py-2.5 rounded-lg bg-slate-100 dark:bg-background-dark border border-slate-200 dark:border-[#483923] text-slate-900 dark:text-white text-sm font-bold hover:bg-primary hover:text-background-dark hover:border-primary transition-all duration-300">
+        View Activity
         </button>
       </div>
     `;
