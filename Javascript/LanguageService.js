@@ -1,16 +1,17 @@
+// LanguageService: handles i18n (translations + switching)
 window.LanguageService = (() => {
     let currentLang = localStorage.getItem("unboredLang") || "en";
 
     const translations = {
         en: {
-            // existing / core
+            // core texts
             search_title: 'Search: "{q}"',
             browse_title: "Browse Activities",
             sort_label: "Sort",
             order_label: "Order",
             no_results: "No matching activities found.",
 
-            // header / controls
+            // header + controls
             search_placeholder: "Find an activity...",
             theme_title: "Theme",
             language_title: "Language",
@@ -21,7 +22,7 @@ window.LanguageService = (() => {
             sidebar_playlists: "Playlists",
             common_add: "Add",
 
-            // local mode box
+            // local storage info box
             local_mode_title: "Local Mode",
             local_mode_desc: "Your data is saved locally on this device.",
             export_btn: "Export",
@@ -29,7 +30,7 @@ window.LanguageService = (() => {
             reset_btn: "Reset / Clear Data",
             export_tip: "Tip: Export saves your full state (activities, categories, playlists) as a text file.",
 
-            // hero
+            // hero section
             hero_title: "Don't just sit there.",
             hero_title_accent: "Do something.",
             hero_subtitle: "Discover your next hobby, distraction, or adventure in seconds. No sign-up required.",
@@ -43,7 +44,7 @@ window.LanguageService = (() => {
             open_form: "Open Form",
             submit_activity: "Submit activity",
 
-            // list
+            // lists / sections
             highly_rated: "Highly Rated",
             highly_rated_subtitle: "Your local favorites (based on rating).",
 
@@ -63,7 +64,7 @@ window.LanguageService = (() => {
             order_asc: "Asc",
             sorting_hint: "Sorting applies to browse, playlists, and search.",
 
-            // form modal
+            // add activity modal
             add_activity_title: "Add Activity",
             label_name: "Name",
             label_type: "Type",
@@ -74,20 +75,20 @@ window.LanguageService = (() => {
             label_image_url: "Image URL",
             add_activity_btn: "Add Activity",
 
-            // category modal
+            // add category modal
             add_category_title: "Add Category",
             category_name_label: "Category name",
             category_name_placeholder: "e.g. music",
             category_tip: "Tip: Use short lowercase names (movie, game, outdoor, …)",
             add_category_btn: "Add Category",
 
-            // playlist modal
+            // add playlist modal
             create_playlist_title: "Create Playlist",
             playlist_name_label: "Playlist name",
             playlist_name_placeholder: "e.g. Friday Night",
             create_playlist_btn: "Create",
 
-            // dynamic texts
+            // dynamic / runtime texts
             no_playlists_yet: "No playlists yet.",
             create_playlist_first: "Create a playlist first",
             playlist_empty: "This playlist is empty. Add activities from the Random modal.",
@@ -96,7 +97,7 @@ window.LanguageService = (() => {
             playlist_prefix: "Playlist: {name}",
             playlist_fallback: "Playlist",
 
-            // alerts / validations
+            // alerts + validations
             category_exists: "Category already exists.",
             invalid_category: "Invalid category name.",
             invalid_playlist: "Invalid playlist name.",
@@ -115,7 +116,7 @@ window.LanguageService = (() => {
             unknown: "unknown",
             minutes_short: "min",
 
-            // category/type labels (storage values -> display labels)
+            // category/type labels (storage -> display)
             type_movie: "Movie",
             type_game: "Game",
             type_outdoor: "Outdoor",
@@ -140,14 +141,14 @@ window.LanguageService = (() => {
         },
 
         de: {
-            // existing / core
+            // core texts
             search_title: 'Suche: "{q}"',
             browse_title: "Aktivitäten durchsuchen",
             sort_label: "Sortieren",
             order_label: "Reihenfolge",
             no_results: "Keine passenden Aktivitäten gefunden.",
 
-            // header / controls
+            // header + controls
             search_placeholder: "Aktivität suchen...",
             theme_title: "Design",
             language_title: "Sprache",
@@ -158,7 +159,7 @@ window.LanguageService = (() => {
             sidebar_playlists: "Playlists",
             common_add: "Hinzufügen",
 
-            // local mode box
+            // local storage info box
             local_mode_title: "Lokaler Modus",
             local_mode_desc: "Deine Daten werden lokal auf diesem Gerät gespeichert.",
             export_btn: "Export",
@@ -166,7 +167,7 @@ window.LanguageService = (() => {
             reset_btn: "Zurücksetzen / Daten löschen",
             export_tip: "Tipp: Export speichert deinen kompletten Stand (Aktivitäten, Kategorien, Playlists) als Textdatei.",
 
-            // hero
+            // hero section
             hero_title: "Nicht nur rumsitzen.",
             hero_title_accent: "Mach was.",
             hero_subtitle: "Finde in Sekunden dein nächstes Hobby, eine Ablenkung oder ein kleines Abenteuer – ganz ohne Anmeldung.",
@@ -180,7 +181,7 @@ window.LanguageService = (() => {
             open_form: "Formular öffnen",
             submit_activity: "Aktivität hinzufügen",
 
-            // list
+            // lists / sections
             highly_rated: "Top bewertet",
             highly_rated_subtitle: "Deine Favoriten (basierend auf Bewertung).",
 
@@ -200,7 +201,7 @@ window.LanguageService = (() => {
             order_asc: "Aufsteigend",
             sorting_hint: "Sortierung gilt für Durchsuchen, Playlists und Suche.",
 
-            // form modal
+            // add activity modal
             add_activity_title: "Aktivität hinzufügen",
             label_name: "Name",
             label_type: "Typ",
@@ -211,20 +212,20 @@ window.LanguageService = (() => {
             label_image_url: "Bild-URL",
             add_activity_btn: "Aktivität hinzufügen",
 
-            // category modal
+            // add category modal
             add_category_title: "Kategorie hinzufügen",
             category_name_label: "Kategoriename",
             category_name_placeholder: "z.B. musik",
             category_tip: "Tipp: Kurze Namen in Kleinbuchstaben verwenden (film, spiel, outdoor, …)",
             add_category_btn: "Kategorie hinzufügen",
 
-            // playlist modal
+            // add playlist modal
             create_playlist_title: "Playlist erstellen",
             playlist_name_label: "Playlist-Name",
             playlist_name_placeholder: "z.B. Freitagabend",
             create_playlist_btn: "Erstellen",
 
-            // dynamic texts
+            // dynamic / runtime texts
             no_playlists_yet: "Noch keine Playlists.",
             create_playlist_first: "Erstelle zuerst eine Playlist",
             playlist_empty: "Diese Playlist ist leer. Füge Aktivitäten im Zufall-Dialog hinzu.",
@@ -233,7 +234,7 @@ window.LanguageService = (() => {
             playlist_prefix: "Playlist: {name}",
             playlist_fallback: "Playlist",
 
-            // alerts / validations
+            // alerts + validations
             category_exists: "Kategorie existiert bereits.",
             invalid_category: "Ungültiger Kategoriename.",
             invalid_playlist: "Ungültiger Playlist-Name.",
@@ -252,7 +253,7 @@ window.LanguageService = (() => {
             unknown: "unbekannt",
             minutes_short: "Min",
 
-            // category/type labels
+            // category/type labels (storage -> display)
             type_movie: "Film",
             type_game: "Spiel",
             type_outdoor: "Outdoor",
@@ -277,6 +278,7 @@ window.LanguageService = (() => {
         },
     };
 
+    // Translation helper: key + optional variables
     function t(key, vars = {}) {
         let str = translations[currentLang]?.[key] ?? key;
         for (const [k, v] of Object.entries(vars)) {
@@ -285,7 +287,7 @@ window.LanguageService = (() => {
         return str;
     }
 
-    // category/type helper: storage value -> label
+    // Helper: maps stored type value to translated label
     function typeLabel(typeValue) {
         if (!typeValue) return t("unknown");
         const key = `type_${String(typeValue).toLowerCase()}`;
@@ -297,6 +299,7 @@ window.LanguageService = (() => {
         return currentLang;
     }
 
+    // Switch language and re-apply all translations
     function setLang(lang) {
         if (!translations[lang]) return;
         currentLang = lang;
@@ -306,6 +309,7 @@ window.LanguageService = (() => {
         applyTranslations();
     }
 
+    // Apply translations to DOM (text, placeholder, title, aria)
     function applyTranslations(rootEl = document) {
         rootEl.querySelectorAll("[data-i18n]").forEach((el) => {
             const key = el.getAttribute("data-i18n");

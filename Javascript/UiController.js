@@ -1,7 +1,9 @@
 class UiController {
+    // UI Controller: kümmert sich um Events + Rendering (Dashboard/Modals)
     activityForm;
     activityRepository;
 
+    // Setup: speichert Repo-Referenz und cached wichtige DOM-Elemente
     constructor(activityRepository) {
         this.activityRepository = activityRepository;
         this.activityForm = document.getElementById("activityForm");
@@ -19,7 +21,7 @@ class UiController {
         this.currentBrowsePlaylistId = null;
     }
 
-    // Helper
+    // ===== Helpers (i18n + Display) =====
     t(key, vars = {}) {
         return window.LanguageService?.t ? window.LanguageService.t(key, vars) : key;
     }
@@ -40,7 +42,8 @@ class UiController {
         return a?.description || "—";
     }
 
-    // ====== FORM ======
+    // Formular: Activity anlegen
+    // Liest die Formfelder aus und baut ein Activity-Objekt (inkl. Dauer parsing)
     getActivityInput() {
         const rawDuration = document.getElementById("activityTime").value;
 
@@ -81,6 +84,7 @@ class UiController {
         );
     }
 
+    // Event Listener: Form submits, Modals, Search + Sorting
     loadButtons() {
         if (!this.activityForm) return;
 
@@ -119,7 +123,7 @@ class UiController {
         this.renderTypeSelectOptions();
         this.renderSidebarCategories();
 
-        // ===== Playlist Template =====
+        // Playlist Template
         if (this.playlistForm) {
             this.playlistForm.addEventListener("submit", (e) => {
                 e.preventDefault();
@@ -144,7 +148,7 @@ class UiController {
         this.renderSidebarPlaylists();
         this.renderPlaylistSelectOptions();
 
-        // ===== Search =====
+        // Search Funktion
         const searchInput = document.getElementById("searchInput");
         if (searchInput) {
             searchInput.addEventListener("input", () => {
@@ -159,7 +163,7 @@ class UiController {
             });
         }
 
-        // ===== Sorting (Browse modal) =====
+        // Sorting (Browse Modal)
         if (this.sortBySelect) {
             this.sortBySelect.addEventListener("change", () => {
                 this.sortState.by = this.sortBySelect.value;
@@ -174,7 +178,8 @@ class UiController {
         }
     }
 
-    // ====== DASHBOARD RENDER ======
+    // Dashboard Render
+    // Rendert alle Dashboard-Teile neu (Sidebar, Stats, History etc.)
     renderDashboard() {
         this.renderSidebarCategories();
         this.renderHighlyRated();
@@ -186,6 +191,7 @@ class UiController {
         this.renderHistory();
     }
 
+    // History Box: zeigt die letzten zufällig ausgewählten Activities
     renderHistory() {
         const box = document.getElementById("historyBox");
         if (!box) return;
@@ -239,6 +245,7 @@ class UiController {
         window.LanguageService.applyTranslations(box);
     }
 
+    // Dropdown für Activity-Typen (kommt aus Kategorien)
     renderTypeSelectOptions() {
         if (!this.typeSelect) return;
 
@@ -256,6 +263,7 @@ class UiController {
         }
     }
 
+    // Sidebar: Kategorienliste + Klick öffnet Browse-Modal
     renderSidebarCategories() {
         const wrap = document.getElementById("sidebarCategories");
         if (!wrap) return;
@@ -283,6 +291,7 @@ class UiController {
         }
     }
 
+    // Sidebar: Playlists anzeigen (inkl. Count)
     renderSidebarPlaylists() {
         const wrap = document.getElementById("sidebarPlaylists");
         if (!wrap) return;
@@ -322,6 +331,7 @@ class UiController {
         }
     }
 
+    // Dropdown im Random-Modal: welche Playlist soll die Activity bekommen?
     renderPlaylistSelectOptions() {
         const sel = document.getElementById("playlistSelect");
         if (!sel) return;
@@ -348,6 +358,7 @@ class UiController {
         }
     }
 
+    // Stats Kacheln (Random picks / Total / Avg rating)
     renderStats() {
         const box = document.getElementById("statsBox");
         if (!box) return;
@@ -379,6 +390,7 @@ class UiController {
         window.LanguageService.applyTranslations(box);
     }
 
+    // Browse-Modal: zeigt Activities einer Playlist (mit aktuellem Sort)
     renderBrowsePlaylist(playlistId) {
         const grid = document.getElementById("browseGrid");
         if (!grid) return;
@@ -410,6 +422,7 @@ class UiController {
         }
     }
 
+    // Action: aktuelle (Random/Modal) Activity zur ausgewählten Playlist hinzufügen
     addCurrentRandomToSelectedPlaylist() {
         const sel = document.getElementById("playlistSelect");
         if (!sel) return;
@@ -436,6 +449,7 @@ class UiController {
         alert(this.t("added_to_playlist"));
     }
 
+    // Action: aktuelle Activity löschen (mit Confirm)
     deleteCurrentModalActivity() {
         const a = this.currentModalActivity;
         if (!a || !a.id) {
@@ -454,6 +468,7 @@ class UiController {
         document.getElementById("modalRandom")?.classList.add("hidden");
     }
 
+    // Wenn Browse-Modal offen ist: nochmal rendern (bei Sort/Search Änderungen)
     refreshBrowseIfOpen() {
         const modal = document.getElementById("modalBrowse");
         const isOpen = modal && !modal.classList.contains("hidden");
@@ -469,6 +484,7 @@ class UiController {
         this.renderBrowse(null, q);
     }
 
+    // Sort Helper für Listen (name/type/duration/rating)
     sortItems(items) {
         const by = this.sortState?.by || "rating";
         const order = this.sortState?.order || "desc";
@@ -507,6 +523,7 @@ class UiController {
         return copy;
     }
 
+    // Dashboard: Top 6 Activities nach Rating
     renderHighlyRated() {
         const list = document.getElementById("highlyRatedList");
         if (!list) return;
@@ -521,6 +538,7 @@ class UiController {
         }
     }
 
+    // UI Card (groß): wird im "Highly Rated" Bereich benutzt
     createBigRowCard(activity) {
         const row = document.createElement("div");
         row.className =
@@ -566,7 +584,7 @@ class UiController {
         return row;
     }
 
-    // ====== BROWSE MODAL ======
+    // Browse-Modal Render: Filter nach Typ + optional Suche
     renderBrowse(filterType = null, searchQuery = "") {
         const grid = document.getElementById("browseGrid");
         if (!grid) return;
@@ -613,6 +631,7 @@ class UiController {
         }
     }
 
+    // UI Card (Grid): Activity Vorschau im Browse-Modal
     createBrowseCard(activity) {
         const card = document.createElement("article");
         card.className =
@@ -658,7 +677,8 @@ class UiController {
         return card;
     }
 
-    // ====== RANDOM MODAL ======
+    // Random Modal
+    // Pickt eine zufällige Activity (optional forciert), speichert History und updated Modal
     showRandom(forceActivity = null) {
         const picked = forceActivity || (() => {
             const all = this.activityRepository.getActivityList() || [];

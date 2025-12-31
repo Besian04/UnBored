@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seite nicht gefunden - Unbored</title>
     <style>
+        /* Base reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        /* Page background + base layout */
         body {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             font-family: 'Arial', sans-serif;
@@ -19,6 +21,7 @@
             color: white;
         }
 
+        /* Centered content wrapper */
         .container {
             position: relative;
             z-index: 10;
@@ -31,6 +34,7 @@
             align-items: center;
         }
 
+        /* 404 headline */
         .error-code {
             font-size: 8rem;
             font-weight: bold;
@@ -45,6 +49,7 @@
             opacity: 0.9;
         }
 
+        /* Back to home button */
         .home-button {
             background: #FFCC00;
             color: #1a1a2e;
@@ -66,7 +71,7 @@
             box-shadow: 0 10px 20px rgba(255, 204, 0, 0.4);
         }
 
-        /* Pacman Styles */
+        /* Pacman */
         .pacman {
             position: absolute;
             width: 150px;
@@ -104,7 +109,7 @@
             z-index: 2;
         }
 
-        /* Ghost Styles */
+        /* Ghost */
         .ghost {
             position: absolute;
             width: 120px;
@@ -160,7 +165,7 @@
             border-radius: 0 0 10px 10px;
         }
 
-        /* Floating Elements */
+        /* Floating background elements */
         .floating {
             position: absolute;
             animation: float 6s ease-in-out infinite;
@@ -204,7 +209,7 @@
             100% { transform: scale(1.2); }
         }
 
-        /* Particle Background */
+        /* Particle background */
         .particles {
             position: fixed;
             top: 0;
@@ -241,7 +246,7 @@
             }
         }
 
-        /* Responsive */
+        /* Responsive tweaks */
         @media (max-width: 768px) {
             .error-code {
                 font-size: 5rem;
@@ -264,17 +269,17 @@
     </style>
 </head>
 <body>
-<!-- Particle Background -->
+<!-- Particle layer -->
 <div class="particles" id="particles"></div>
 
-<!-- Floating Elements -->
+<!-- Floating background elements -->
 <div class="floating dot" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
 <div class="floating power-pellet" style="top: 70%; left: 85%; animation-delay: 1s;"></div>
 <div class="floating dot" style="top: 40%; left: 90%; animation-delay: 2s;"></div>
 <div class="floating dot" style="top: 80%; left: 15%; animation-delay: 3s;"></div>
 <div class="floating power-pellet" style="top: 30%; left: 5%; animation-delay: 4s;"></div>
 
-<!-- Pacman -->
+<!-- Pacman character -->
 <div class="pacman" id="pacman">
     <div class="pacman-body">
         <div class="pacman-eye"></div>
@@ -282,7 +287,7 @@
     </div>
 </div>
 
-<!-- Ghost -->
+<!-- Ghost character -->
 <div class="ghost" id="ghost">
     <div class="ghost-body">
         <div class="ghost-eye left">
@@ -299,7 +304,7 @@
     </div>
 </div>
 
-<!-- Content -->
+<!-- Main content -->
 <div class="container">
     <div class="error-code">404</div>
     <div class="error-message">Oops! Diese Seite wurde von Pacman gefressen...</div>
@@ -308,7 +313,7 @@
 </div>
 
 <script>
-    // Pacman folgt der Maus
+    // Pacman follows mouse
     const pacman = document.getElementById('pacman');
     const ghost = document.getElementById('ghost');
     let mouseX = 0;
@@ -323,7 +328,7 @@
         mouseY = e.clientY;
     });
 
-    // Pacman bewegt sich zur Maus
+    // Pacman movement loop
     function updatePacman() {
         const speed = 0.05;
         pacmanX += (mouseX - pacmanX) * speed;
@@ -332,27 +337,27 @@
         pacman.style.left = (pacmanX - 75) + 'px';
         pacman.style.top = (pacmanY - 75) + 'px';
 
-        // Drehung basierend auf Bewegung
+        // rotate based on movement
         const rotation = (mouseX - pacmanX) * 0.01;
         pacman.style.transform = `rotate(${rotation}deg)`;
 
         requestAnimationFrame(updatePacman);
     }
 
-    // Geist bewegt sich zufällig
+    // Ghost movement loop
     function updateGhost() {
-        // Zufällige Bewegung
+        // random drift
         ghostX += (Math.random() - 0.5) * 4;
         ghostY += (Math.random() - 0.5) * 4;
 
-        // Innerhalb des Bildschirms halten
+        // keep inside viewport
         ghostX = Math.max(60, Math.min(window.innerWidth - 60, ghostX));
         ghostY = Math.max(60, Math.min(window.innerHeight - 60, ghostY));
 
         ghost.style.left = (ghostX - 60) + 'px';
         ghost.style.top = (ghostY - 60) + 'px';
 
-        // Gelegentlich Pacman jagen
+        // occasionally chase pacman
         if (Math.random() < 0.02) {
             ghostX += (pacmanX - ghostX) * 0.1;
             ghostY += (pacmanY - ghostY) * 0.1;
@@ -361,7 +366,7 @@
         requestAnimationFrame(updateGhost);
     }
 
-    // Partikel erstellen
+    // Create background particles
     function createParticles() {
         const particlesContainer = document.getElementById('particles');
         const particleCount = 50;
@@ -370,12 +375,12 @@
             const particle = document.createElement('div');
             particle.className = 'particle';
 
-            // Zufällige Position und Animation
+            // random position + animation
             particle.style.left = Math.random() * 100 + 'vw';
             particle.style.animationDelay = Math.random() * 8 + 's';
             particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
 
-            // Zufällige Größe
+            // random size
             const size = Math.random() * 3 + 2;
             particle.style.width = size + 'px';
             particle.style.height = size + 'px';
@@ -384,12 +389,12 @@
         }
     }
 
-    // Initialisierung
+    // Init
     createParticles();
     updatePacman();
     updateGhost();
 
-    // Pacman springt gelegentlich
+    // Small idle animation
     setInterval(() => {
         pacman.style.transform = 'scale(1.1)';
         setTimeout(() => {

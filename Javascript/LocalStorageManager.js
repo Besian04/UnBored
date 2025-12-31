@@ -1,3 +1,4 @@
+// LocalStorageManager: handles persistence, import/export, migrations
 class LocalStorageManager {
     activityRepository;
 
@@ -7,20 +8,23 @@ class LocalStorageManager {
         this.legacyKey = "userData";
     }
 
-    // Helper
+    // i18n helper
     t(key, vars = {}) {
         return window.LanguageService?.t ? window.LanguageService.t(key, vars) : key;
     }
 
+    // Returns raw JSON string of current app state
     getStoredData() {
         // Für Kompatibilität: liefert raw JSON string des NEUEN states
         return localStorage.getItem(this.storageKey);
     }
 
+    // Internal: get raw state from localStorage
     getStoredStateRaw() {
         return localStorage.getItem(this.storageKey);
     }
 
+    // Parse stored state (safe JSON parse)
     getStoredState() {
         const raw = this.getStoredStateRaw();
         if (!raw) return null;
@@ -31,6 +35,7 @@ class LocalStorageManager {
         }
     }
 
+    // Build current state from repository and persist it
     updateLocalStorage() {
         const state = {
             version: 1,
@@ -44,6 +49,7 @@ class LocalStorageManager {
         return this.getStoredData();
     }
 
+    // Check if app data (new or legacy) exists
     checkIfDataAlreadyExistsInLocalStorage() {
         if (localStorage.getItem(this.storageKey)) return true;
         if (localStorage.getItem(this.legacyKey)) return true;
@@ -51,14 +57,14 @@ class LocalStorageManager {
     }
 
     importDataFromLocalStorage() {
-        // Neues Format
+        // New format
         const state = this.getStoredState();
         if (state) {
             this.applyStateToRepository(state);
             return;
         }
 
-        // Legacy Migration: "userData" -> "unboredState"
+        // Legacy migration: userData -> unboredState
         const legacyRaw = localStorage.getItem(this.legacyKey);
         if (legacyRaw) {
             try {
@@ -78,6 +84,7 @@ class LocalStorageManager {
         }
     }
 
+    // Apply persisted state to repository (incl. defaults)
     applyStateToRepository(state) {
         this.activityRepository.categories = Array.isArray(state.categories) ? state.categories : [];
         this.activityRepository.activities = Array.isArray(state.activities) ? state.activities : [];
@@ -100,7 +107,7 @@ class LocalStorageManager {
     }
 
     importStandardData() {
-        // Demo/Default Daten – jetzt i18n
+        // Demo / default data (i18n based)
         const state = {
             version: 1,
             categories: ["movie", "game", "outdoor"],
@@ -144,6 +151,7 @@ class LocalStorageManager {
         this.applyStateToRepository(state);
     }
 
+    // Export current state as text file
     exportDataAsTextFile() {
         const raw = localStorage.getItem(this.storageKey) || "";
         const blob = new Blob([raw], { type: "text/plain;charset=utf-8" });
@@ -152,7 +160,7 @@ class LocalStorageManager {
         const a = document.createElement("a");
         a.href = url;
 
-        // Dateiname i18n (falls key fehlt -> fallback)
+        // i18n filename (fallback if missing)
         a.download = this.t("export_filename") || "unbored_state.txt";
 
         document.body.appendChild(a);
@@ -162,6 +170,7 @@ class LocalStorageManager {
         URL.revokeObjectURL(url);
     }
 
+    // Import state from text file
     importDataAsTextFile(file) {
         return new Promise((resolve, reject) => {
             if (!file) return reject(new Error(this.t("import_no_file")));
@@ -194,13 +203,14 @@ class LocalStorageManager {
         });
     }
 
+    // Reset app data and restore default state
     resetAllData() {
         try {
-            // löscht nur den App-State (nicht Theme/Lang)
+            // Remove app state only (keep theme/lang)
             localStorage.removeItem(this.storageKey);
             localStorage.removeItem(this.legacyKey);
 
-            // Standarddaten wieder einspielen
+            // Re-seed default data
             this.importStandardData();
 
             return { ok: true };

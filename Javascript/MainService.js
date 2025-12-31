@@ -1,17 +1,27 @@
+// MainService: app bootstrap + global event bindings
 let userInstance;
 
+// App entry point (init user, UI, language)
 window.addEventListener("load", () => {
     userInstance = new User();
 
+    // Bind modal open/close handlers
     bindModals();
+
+    // Bind top-level buttons (Random, Browse, Add, Settings)
     bindTopButtons();
 
+    // Apply translations on initial load
     window.LanguageService.applyTranslations();
 
+    // Initial dashboard render
     userInstance.uiController.renderDashboard();
+
+    // Expose instance for debugging
     window.userInstance = userInstance;
 });
 
+// Global modal close handling (data-close)
 function bindModals() {
     document.addEventListener("click", (e) => {
         const target = e.target.closest("[data-close]");
@@ -21,14 +31,17 @@ function bindModals() {
     });
 }
 
+// Open modal by id
 function openModal(id) {
     document.getElementById(id).classList.remove("hidden");
 }
 
+// Close modal by id
 function closeModal(id) {
     document.getElementById(id).classList.add("hidden");
 }
 
+// Top bar + modal action buttons
 function bindTopButtons() {
     document.getElementById("btnAdd").addEventListener("click", () => openModal("modalForm"));
 
@@ -51,7 +64,7 @@ function bindTopButtons() {
         userInstance.uiController.showRandom();
     });
 
-    // ===== Export / Import Buttons (Local Mode box) =====
+    // Export / Import (Local Mode)
     const btnExport = document.getElementById("btnExport");
     const btnImport = document.getElementById("btnImport");
     const importFile = document.getElementById("importFile");
@@ -89,13 +102,13 @@ function bindTopButtons() {
         btnAddCategory.addEventListener("click", () => openModal("modalCategory"));
     }
 
-    // ===== Add Playlist =====
+    // Add playlist modal
     const btnAddPlaylist = document.getElementById("btnAddPlaylist");
     if (btnAddPlaylist) {
         btnAddPlaylist.addEventListener("click", () => openModal("modalPlaylist"));
     }
 
-    // ===== Add current activity to playlist (from Random modal) =====
+    // Add current random activity to playlist
     const btnAddToPlaylist = document.getElementById("btnAddToPlaylist");
     if (btnAddToPlaylist) {
         btnAddToPlaylist.addEventListener("click", () => {
@@ -103,7 +116,7 @@ function bindTopButtons() {
         });
     }
 
-    // ===== Delete current activity (Random modal) =====
+    // Delete current random activity
     const btnDeleteActivity = document.getElementById("btnDeleteActivity");
     if (btnDeleteActivity) {
         btnDeleteActivity.addEventListener("click", () => {
@@ -111,7 +124,7 @@ function bindTopButtons() {
         });
     }
 
-    // Dark - Light Mode button
+    // Theme toggle (dark / light)
     const btnTheme = document.getElementById("btnTheme");
     if (btnTheme) {
         btnTheme.addEventListener("click", () => {
@@ -121,7 +134,7 @@ function bindTopButtons() {
         });
     }
 
-    // Language button
+    // Language toggle (EN / DE)
     const btnLang = document.getElementById("btnLang");
     if (btnLang) {
         // initial label
@@ -136,11 +149,12 @@ function bindTopButtons() {
 
             // refresh UI texts that are created dynamically
             userInstance.uiController.renderDashboard();
-            userInstance.uiController.refreshBrowseIfOpen(); // falls Browse/Search offen ist
+            // refresh browse modal if open
+            userInstance.uiController.refreshBrowseIfOpen();
         });
     }
 
-    // Reset / Clear Data
+    // Reset all local data
     const btnReset = document.getElementById("btnReset");
     if (btnReset) {
         btnReset.addEventListener("click", () => {
