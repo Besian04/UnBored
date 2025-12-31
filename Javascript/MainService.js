@@ -6,7 +6,10 @@ window.addEventListener("load", () => {
     bindModals();
     bindTopButtons();
 
+    window.LanguageService.applyTranslations();
+
     userInstance.uiController.renderDashboard();
+    window.userInstance = userInstance;
 });
 
 function bindModals() {
@@ -35,6 +38,11 @@ function bindTopButtons() {
     });
 
     document.getElementById("btnRandom").addEventListener("click", () => {
+        userInstance.activityRepository.stats = userInstance.activityRepository.stats || { randomClicks: 0 };
+        userInstance.activityRepository.stats.randomClicks = (userInstance.activityRepository.stats.randomClicks || 0) + 1;
+
+        userInstance.localStorageManager.updateLocalStorage();
+
         userInstance.uiController.showRandom();
         openModal("modalRandom");
     });
@@ -66,9 +74,9 @@ function bindTopButtons() {
             try {
                 await userInstance.localStorageManager.importDataAsTextFile(file);
                 userInstance.uiController.renderDashboard();
-                alert("Import successful!");
+                alert(window.LanguageService.t("import_success"));
             } catch (err) {
-                alert("Import failed: " + (err?.message || err));
+                alert(window.LanguageService.t("import_failed", { msg: (err?.message || err) }));
             } finally {
                 // allow re-importing the same file later
                 e.target.value = "";
@@ -123,13 +131,30 @@ function bindTopButtons() {
             const next = window.LanguageService.getLang() === "en" ? "de" : "en";
             window.LanguageService.setLang(next);
 
-            // update html lang + button label
-            document.documentElement.lang = next;
+            window.LanguageService.applyTranslations();
             btnLang.textContent = next.toUpperCase();
 
             // refresh UI texts that are created dynamically
             userInstance.uiController.renderDashboard();
             userInstance.uiController.refreshBrowseIfOpen(); // falls Browse/Search offen ist
+        });
+    }
+
+    // Reset / Clear Data
+    const btnReset = document.getElementById("btnReset");
+    if (btnReset) {
+        btnReset.addEventListener("click", () => {
+            const ok = confirm(window.LanguageService.t("reset_confirm"));
+            if (!ok) return;
+
+            const res = userInstance.localStorageManager.resetAllData();
+            if (!res.ok) {
+                alert(window.LanguageService.t("import_failed", { msg: res.error?.message || res.error }));
+                return;
+            }
+            userInstance.uiController.renderDashboard();
+            userInstance.uiController.refreshBrowseIfOpen();
+            alert(window.LanguageService.t("reset_done"));
         });
     }
 

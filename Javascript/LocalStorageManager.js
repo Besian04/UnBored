@@ -7,6 +7,11 @@ class LocalStorageManager {
         this.legacyKey = "userData";
     }
 
+    // Helper
+    t(key, vars = {}) {
+        return window.LanguageService?.t ? window.LanguageService.t(key, vars) : key;
+    }
+
     getStoredData() {
         // Für Kompatibilität: liefert raw JSON string des NEUEN states
         return localStorage.getItem(this.storageKey);
@@ -31,7 +36,8 @@ class LocalStorageManager {
             version: 1,
             categories: this.activityRepository.categories || [],
             activities: this.activityRepository.activities || [],
-            playlists: this.activityRepository.playlists || []
+            playlists: this.activityRepository.playlists || [],
+            stats: this.activityRepository.stats || { randomClicks: 0, history: [] }
         };
 
         localStorage.setItem(this.storageKey, JSON.stringify(state, null, 2));
@@ -40,9 +46,7 @@ class LocalStorageManager {
 
     checkIfDataAlreadyExistsInLocalStorage() {
         if (localStorage.getItem(this.storageKey)) return true;
-
         if (localStorage.getItem(this.legacyKey)) return true;
-
         return false;
     }
 
@@ -61,15 +65,15 @@ class LocalStorageManager {
                 const legacyActivities = JSON.parse(legacyRaw);
                 const migrated = {
                     version: 1,
-                    categories: [...new Set((legacyActivities || []).map(a => a.type))].filter(Boolean),
+                    categories: [...new Set((legacyActivities || []).map((a) => a.type))].filter(Boolean),
                     activities: Array.isArray(legacyActivities) ? legacyActivities : [],
-                    playlists: []
+                    playlists: [],
                 };
                 localStorage.setItem(this.storageKey, JSON.stringify(migrated, null, 2));
                 this.applyStateToRepository(migrated);
                 return;
             } catch (e) {
-                console.error("Legacy migration failed:", e);
+                console.error(this.t("legacy_migration_failed"), e);
             }
         }
     }
@@ -78,6 +82,8 @@ class LocalStorageManager {
         this.activityRepository.categories = Array.isArray(state.categories) ? state.categories : [];
         this.activityRepository.activities = Array.isArray(state.activities) ? state.activities : [];
         this.activityRepository.playlists = Array.isArray(state.playlists) ? state.playlists : [];
+        this.activityRepository.stats = state.stats || { randomClicks: 0, history: [] };
+        if (!Array.isArray(this.activityRepository.stats.history)) this.activityRepository.stats.history = [];
 
         const must = ["movie", "game", "outdoor"];
         for (const m of must) {
@@ -86,7 +92,7 @@ class LocalStorageManager {
             }
         }
 
-        for (const a of (this.activityRepository.activities || [])) {
+        for (const a of this.activityRepository.activities || []) {
             if (a?.type && !this.activityRepository.categories.includes(a.type)) {
                 this.activityRepository.categories.push(a.type);
             }
@@ -94,42 +100,44 @@ class LocalStorageManager {
     }
 
     importStandardData() {
+        // Demo/Default Daten – jetzt i18n
         const state = {
             version: 1,
             categories: ["movie", "game", "outdoor"],
+            stats: { randomClicks: 0, history: [] },
             activities: [
                 {
                     id: "a1",
                     type: "movie",
-                    name: "Sci-Fi Film",
-                    description: "Futuristic action story",
-                    duration: 120, // Minuten
+                    nameKey: "sample_movie_name",
+                    descKey: "sample_movie_desc",
+                    duration: 120,
                     rating: 4,
                     link: "",
-                    image: ""
+                    image: "",
                 },
                 {
                     id: "a2",
                     type: "game",
-                    name: "Board Game Night",
-                    description: "Strategy games with friends",
-                    duration: 90, // Minuten
+                    nameKey: "sample_game_name",
+                    descKey: "sample_game_desc",
+                    duration: 90,
                     rating: 3,
                     link: "",
-                    image: ""
+                    image: "",
                 },
                 {
                     id: "a3",
                     type: "outdoor",
-                    name: "Hiking Trail",
-                    description: "Scenic mountain hike",
-                    duration: 180, // Minuten
+                    nameKey: "sample_outdoor_name",
+                    descKey: "sample_outdoor_desc",
+                    duration: 180,
                     rating: 5,
                     link: "",
-                    image: ""
-                }
+                    image: "",
+                },
             ],
-            playlists: []
+            playlists: [],
         };
 
         localStorage.setItem(this.storageKey, JSON.stringify(state, null, 2));
@@ -143,7 +151,10 @@ class LocalStorageManager {
 
         const a = document.createElement("a");
         a.href = url;
-        a.download = "unbored_state.txt";
+
+        // Dateiname i18n (falls key fehlt -> fallback)
+        a.download = this.t("export_filename") || "unbored_state.txt";
+
         document.body.appendChild(a);
         a.click();
         a.remove();
@@ -153,16 +164,20 @@ class LocalStorageManager {
 
     importDataAsTextFile(file) {
         return new Promise((resolve, reject) => {
-            if (!file) return reject(new Error("No file"));
+            if (!file) return reject(new Error(this.t("import_no_file")));
 
             const reader = new FileReader();
             reader.onload = () => {
                 try {
                     const parsed = JSON.parse(String(reader.result || ""));
 
-                    if (!parsed || typeof parsed !== "object") throw new Error("Invalid JSON");
-                    if (!Array.isArray(parsed.categories) || !Array.isArray(parsed.activities) || !Array.isArray(parsed.playlists)) {
-                        throw new Error("Missing keys (categories/activities/playlists)");
+                    if (!parsed || typeof parsed !== "object") throw new Error(this.t("import_invalid_json"));
+                    if (
+                        !Array.isArray(parsed.categories) ||
+                        !Array.isArray(parsed.activities) ||
+                        !Array.isArray(parsed.playlists)
+                    ) {
+                        throw new Error(this.t("import_missing_keys"));
                     }
 
                     // Persist + apply
@@ -177,6 +192,21 @@ class LocalStorageManager {
             reader.onerror = reject;
             reader.readAsText(file);
         });
+    }
+
+    resetAllData() {
+        try {
+            // löscht nur den App-State (nicht Theme/Lang)
+            localStorage.removeItem(this.storageKey);
+            localStorage.removeItem(this.legacyKey);
+
+            // Standarddaten wieder einspielen
+            this.importStandardData();
+
+            return { ok: true };
+        } catch (e) {
+            return { ok: false, error: e };
+        }
     }
 
     deleteStoredData() {}
