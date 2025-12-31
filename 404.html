@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seite nicht gefunden - Unbored</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            overflow: hidden;
+            color: white;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            color: #FFCC00;
+        }
+
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .home-button {
+            background: #FFCC00;
+            color: #1a1a2e;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 2rem;
+            font-weight: bold;
+        }
+
+        .home-button:hover {
+            background: #ffd83d;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        /* Pacman Styles */
+        .pacman {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            transition: all 0.3s ease;
+            z-index: 5;
+        }
+
+        .pacman-body {
+            width: 100%;
+            height: 100%;
+            background: #FFCC00;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .pacman-mouth {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #1a1a2e;
+            clip-path: polygon(50% 50%, 100% 0, 100% 100%);
+            animation: eat 0.5s infinite alternate;
+        }
+
+        .pacman-eye {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #1a1a2e;
+            border-radius: 50%;
+            top: 35px;
+            left: 85px;
+            z-index: 2;
+        }
+
+        /* Ghost Styles */
+        .ghost {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            transition: all 0.3s ease;
+            z-index: 4;
+        }
+
+        .ghost-body {
+            width: 100%;
+            height: 100%;
+            background: #FF5252;
+            border-radius: 60% 60% 0 0;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .ghost-eye {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 35px;
+        }
+
+        .ghost-eye.left { left: 25px; }
+        .ghost-eye.right { right: 25px; }
+
+        .ghost-pupil {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #1a1a2e;
+            border-radius: 50%;
+            top: 5px;
+            left: 5px;
+        }
+
+        .ghost-bottom {
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            bottom: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .ghost-bottom-wave {
+            width: 20px;
+            height: 20px;
+            background: #FF5252;
+            border-radius: 0 0 10px 10px;
+        }
+
+        /* Floating Elements */
+        .floating {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 204, 0, 0.5);
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .power-pellet {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: pulse 2s infinite alternate;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes eat {
+            0% { clip-path: polygon(50% 50%, 100% 0, 100% 100%); }
+            100% { clip-path: polygon(50% 50%, 100% 30%, 100% 70%); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particle-float 8s linear infinite;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+
+            .error-message {
+                font-size: 1.2rem;
+            }
+
+            .pacman {
+                width: 120px;
+                height: 120px;
+            }
+
+            .ghost {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Particle Background -->
+<div class="particles" id="particles"></div>
+
+<!-- Floating Elements -->
+<div class="floating dot" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+<div class="floating power-pellet" style="top: 70%; left: 85%; animation-delay: 1s;"></div>
+<div class="floating dot" style="top: 40%; left: 90%; animation-delay: 2s;"></div>
+<div class="floating dot" style="top: 80%; left: 15%; animation-delay: 3s;"></div>
+<div class="floating power-pellet" style="top: 30%; left: 5%; animation-delay: 4s;"></div>
+
+<!-- Pacman -->
+<div class="pacman" id="pacman">
+    <div class="pacman-body">
+        <div class="pacman-eye"></div>
+        <div class="pacman-mouth"></div>
+    </div>
+</div>
+
+<!-- Ghost -->
+<div class="ghost" id="ghost">
+    <div class="ghost-body">
+        <div class="ghost-eye left">
+            <div class="ghost-pupil"></div>
+        </div>
+        <div class="ghost-eye right">
+            <div class="ghost-pupil"></div>
+        </div>
+        <div class="ghost-bottom">
+            <div class="ghost-bottom-wave"></div>
+            <div class="ghost-bottom-wave"></div>
+            <div class="ghost-bottom-wave"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Content -->
+<div class="container">
+    <div class="error-code">404</div>
+    <div class="error-message">Oops! Diese Seite wurde von Pacman gefressen...</div>
+    <p>Pacman sucht nach der Seite, aber vielleicht existiert sie wirklich nicht.</p>
+    <a href="index.html" class="home-button">Zurück zur Startseite</a>
+</div>
+
+<script>
+    // Pacman folgt der Maus
+    const pacman = document.getElementById('pacman');
+    const ghost = document.getElementById('ghost');
+    let mouseX = 0;
+    let mouseY = 0;
+    let pacmanX = window.innerWidth / 2;
+    let pacmanY = window.innerHeight / 2;
+    let ghostX = window.innerWidth / 3;
+    let ghostY = window.innerHeight / 3;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    // Pacman bewegt sich zur Maus
+    function updatePacman() {
+        const speed = 0.05;
+        pacmanX += (mouseX - pacmanX) * speed;
+        pacmanY += (mouseY - pacmanY) * speed;
+
+        pacman.style.left = (pacmanX - 75) + 'px';
+        pacman.style.top = (pacmanY - 75) + 'px';
+
+        // Drehung basierend auf Bewegung
+        const rotation = (mouseX - pacmanX) * 0.01;
+        pacman.style.transform = `rotate(${rotation}deg)`;
+
+        requestAnimationFrame(updatePacman);
+    }
+
+    // Geist bewegt sich zufällig
+    function updateGhost() {
+        // Zufällige Bewegung
+        ghostX += (Math.random() - 0.5) * 4;
+        ghostY += (Math.random() - 0.5) * 4;
+
+        // Innerhalb des Bildschirms halten
+        ghostX = Math.max(60, Math.min(window.innerWidth - 60, ghostX));
+        ghostY = Math.max(60, Math.min(window.innerHeight - 60, ghostY));
+
+        ghost.style.left = (ghostX - 60) + 'px';
+        ghost.style.top = (ghostY - 60) + 'px';
+
+        // Gelegentlich Pacman jagen
+        if (Math.random() < 0.02) {
+            ghostX += (pacmanX - ghostX) * 0.1;
+            ghostY += (pacmanY - ghostY) * 0.1;
+        }
+
+        requestAnimationFrame(updateGhost);
+    }
+
+    // Partikel erstellen
+    function createParticles() {
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 50;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+
+            // Zufällige Position und Animation
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 8 + 's';
+            particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+
+            // Zufällige Größe
+            const size = Math.random() * 3 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+
+            particlesContainer.appendChild(particle);
+        }
+    }
+
+    // Initialisierung
+    createParticles();
+    updatePacman();
+    updateGhost();
+
+    // Pacman springt gelegentlich
+    setInterval(() => {
+        pacman.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+            pacman.style.transform = 'scale(1)';
+        }, 200);
+    }, 3000);
+</script>
+</body>
+</html>
