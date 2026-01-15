@@ -2,6 +2,8 @@ class UiController {
     // UI Controller: kümmert sich um Events + Rendering (Dashboard/Modals)
     activityForm;
     activityRepository;
+    timerInterval = null;
+    timerSeconds = 0;
 
     // Setup: speichert Repo-Referenz und cached wichtige DOM-Elemente
     constructor(activityRepository) {
@@ -19,6 +21,9 @@ class UiController {
         this.sortOrderSelect = document.getElementById("sortOrder");
         this.sortState = { by: "rating", order: "desc" };
         this.currentBrowsePlaylistId = null;
+
+        // Timer button event listeners
+        this.setupTimerButtons();
     }
 
     // ===== Helpers (i18n + Display) =====
@@ -40,6 +45,70 @@ class UiController {
     displayActivityDesc(a) {
         if (a?.descKey) return this.t(a.descKey);
         return a?.description || "—";
+    }
+
+    // ===== Timer Methods =====
+    setupTimerButtons() {
+        const btnStart = document.getElementById("btnStartTimer");
+        const btnStop = document.getElementById("btnStopTimer");
+        
+        if (btnStart) {
+            btnStart.addEventListener("click", () => this.startTimer());
+        }
+        if (btnStop) {
+            btnStop.addEventListener("click", () => this.stopTimer());
+        }
+    }
+
+    startTimer() {
+        if (this.timerInterval) return; // Already running
+        
+        const btnStart = document.getElementById("btnStartTimer");
+        const btnStop = document.getElementById("btnStopTimer");
+        
+        if (btnStart) btnStart.classList.add("hidden");
+        if (btnStop) btnStop.classList.remove("hidden");
+
+        this.timerInterval = setInterval(() => {
+            this.timerSeconds--;
+            this.updateTimerDisplay();
+            
+            if (this.timerSeconds <= 0) {
+                this.stopTimer();
+                this.playTimerNotification();
+            }
+        }, 1000);
+    }
+
+    stopTimer() {
+        if (this.timerInterval) {
+            clearInterval(this.timerInterval);
+            this.timerInterval = null;
+        }
+
+        const btnStart = document.getElementById("btnStartTimer");
+        const btnStop = document.getElementById("btnStopTimer");
+        
+        if (btnStart) btnStart.classList.remove("hidden");
+        if (btnStop) btnStop.classList.add("hidden");
+    }
+
+    updateTimerDisplay() {
+        const timerValue = document.getElementById("timerValue");
+        if (timerValue) {
+            const minutes = Math.floor(this.timerSeconds / 60);
+            const seconds = this.timerSeconds % 60;
+            timerValue.textContent = `${minutes}:${seconds.toString().padStart(2, "0")}`;
+        }
+    }
+
+    playTimerNotification() {
+        // Simple notification (can be enhanced with audio/visual alerts)
+        const timerValue = document.getElementById("timerValue");
+        if (timerValue) {
+            timerValue.classList.add("animate-pulse");
+            setTimeout(() => timerValue.classList.remove("animate-pulse"), 2000);
+        }
     }
 
     // Formular: Activity anlegen
@@ -252,7 +321,7 @@ class UiController {
         const cats = this.activityRepository.getCategoryList() || [];
         this.typeSelect.innerHTML = "";
 
-        const fallback = ["movie", "game", "outdoor"];
+        const fallback = ["movie", "game", "outdoor", "lofi-music"];
         const finalCats = cats.length ? cats : fallback;
 
         for (const c of finalCats) {
@@ -734,6 +803,28 @@ class UiController {
         document.getElementById("randomDescription").textContent = this.displayActivityDesc(picked);
         document.getElementById("randomTime").textContent = (picked.duration ?? "—") + " " + this.t("minutes_short");
         document.getElementById("randomRating").textContent = picked.rating ?? "—";
+
+        // Handle link display
+        const linkContainer = document.getElementById("randomLinkContainer");
+        const linkElement = document.getElementById("randomLink");
+        if (picked.link && picked.link.trim().length > 0) {
+            linkElement.href = picked.link;
+            linkElement.textContent = picked.link;
+            linkContainer.classList.remove("hidden");
+        } else {
+            linkContainer.classList.add("hidden");
+        }
+
+        // Initialize timer
+        this.stopTimer();
+        const timerDisplay = document.getElementById("timerDisplay");
+        if (picked.duration && picked.duration > 0) {
+            this.timerSeconds = picked.duration * 60; // Convert minutes to seconds
+            this.updateTimerDisplay();
+            if (timerDisplay) timerDisplay.classList.remove("hidden");
+        } else {
+            if (timerDisplay) timerDisplay.classList.add("hidden");
+        }
 
         // History sofort im Dashboard aktualisieren (synchron)
         this.renderHistory();

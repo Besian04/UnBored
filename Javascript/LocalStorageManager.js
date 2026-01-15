@@ -92,7 +92,7 @@ class LocalStorageManager {
         this.activityRepository.stats = state.stats || { randomClicks: 0, history: [] };
         if (!Array.isArray(this.activityRepository.stats.history)) this.activityRepository.stats.history = [];
 
-        const must = ["movie", "game", "outdoor"];
+        const must = ["movie", "game", "outdoor", "lofi-music"];
         for (const m of must) {
             if (!this.activityRepository.categories.includes(m)) {
                 this.activityRepository.categories.push(m);
@@ -110,7 +110,7 @@ class LocalStorageManager {
         // Demo / default data (i18n based)
         const state = {
             version: 1,
-            categories: ["movie", "game", "outdoor"],
+            categories: ["movie", "game", "outdoor", "lofi-music"],
             stats: { randomClicks: 0, history: [] },
             activities: [
                 {
@@ -143,6 +143,17 @@ class LocalStorageManager {
                     link: "",
                     image: "",
                 },
+                {
+                    id: "a4",
+                    type: "lofi-music",
+                    nameKey: "sample_lofi_music_name",
+                    descKey: "sample_lofi_music_desc",
+                    duration: 120,
+                    rating: 4,
+                    link: "",
+                    image: "",
+                },
+
             ],
             playlists: [],
         };
