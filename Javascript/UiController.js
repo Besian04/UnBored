@@ -341,6 +341,8 @@ class UiController {
 
         const categories = this.activityRepository.getCategoryList();
         for (let cat of categories) {
+            const b = document.createElement("button");
+            b.innerHTML = "del";
             const a = document.createElement("button");
             a.className =
                 "flex items-center justify-between py-2 text-sm text-slate-600 dark:text-[#c9b292] hover:text-primary transition-colors w-full text-left";
@@ -356,7 +358,14 @@ class UiController {
                 document.getElementById("modalBrowse")?.classList.remove("hidden");
             });
 
+            b.addEventListener("click", () => {
+                this.renderBrowse(cat);
+                this.activityRepository.deleteCategory(window.LanguageService.typeLabel(cat).toLowerCase())
+                this.renderDashboard();
+            });
+
             wrap.appendChild(a);
+            wrap.appendChild(b);
         }
     }
 
@@ -378,6 +387,8 @@ class UiController {
         }
 
         for (const pl of playlists) {
+            const b = document.createElement("button");
+            b.innerHTML = "del";
             const btn = document.createElement("button");
             btn.className =
                 "flex items-center justify-between py-2 text-sm text-slate-600 dark:text-[#c9b292] hover:text-primary transition-colors w-full text-left";
@@ -396,7 +407,13 @@ class UiController {
                 document.getElementById("modalBrowse")?.classList.remove("hidden");
             });
 
+            b.addEventListener("click", () => {
+                this.activityRepository.deletePlaylist(pl.id)
+                this.renderDashboard();
+            });
+
             wrap.appendChild(btn);
+            wrap.appendChild(b);
         }
     }
 

@@ -97,6 +97,26 @@ class ActivityRepository {
         return { ok: true };
     }
 
+    deleteCategory(name) {
+        console.log(name)
+        const index = this.categories.indexOf(name);
+
+
+        let activitylist = this.getActivityByType(name)
+        console.log(activitylist)
+        for (const act of activitylist) {
+            const id = act.id
+            console.log(act)
+            this.deleteActivity(id)
+        }
+
+        if (index !== -1) {
+            this.categories.splice(index, 1);
+        }
+
+        this.localStorageManager?.updateLocalStorage();
+    }
+
     // Create new playlist
     createPlaylist(name) {
         const n = String(name || "").trim();
@@ -107,6 +127,17 @@ class ActivityRepository {
 
         this.localStorageManager?.updateLocalStorage();
         return { ok: true, id };
+    }
+
+    deletePlaylist(id) {
+        console.log(id)
+        const index = this.playlists.findIndex(playlist => playlist.id === id);
+
+        if (index !== -1) {
+            this.playlists.splice(index, 1);
+        }
+
+        this.localStorageManager?.updateLocalStorage();
     }
 
     // Return all playlists

@@ -92,12 +92,12 @@ class LocalStorageManager {
         this.activityRepository.stats = state.stats || { randomClicks: 0, history: [] };
         if (!Array.isArray(this.activityRepository.stats.history)) this.activityRepository.stats.history = [];
 
-        const must = ["movie", "game", "outdoor", "lofi-music"];
+        /*const must = ["movie", "game", "outdoor", "lofi-music"];
         for (const m of must) {
             if (!this.activityRepository.categories.includes(m)) {
                 this.activityRepository.categories.push(m);
             }
-        }
+        }*/
 
         for (const a of this.activityRepository.activities || []) {
             if (a?.type && !this.activityRepository.categories.includes(a.type)) {
