@@ -116,8 +116,8 @@ class LocalStorageManager {
                 {
                     id: "a1",
                     type: "movie",
-                    nameKey: "sample_movie_name",
-                    descKey: "sample_movie_desc",
+                    name: "sample_movie_name",
+                    description: "sample_movie_desc",
                     duration: 120,
                     rating: 4,
                     link: "",
@@ -126,8 +126,8 @@ class LocalStorageManager {
                 {
                     id: "a2",
                     type: "game",
-                    nameKey: "sample_game_name",
-                    descKey: "sample_game_desc",
+                    name: "sample_game_name",
+                    description: "sample_game_desc",
                     duration: 90,
                     rating: 3,
                     link: "",
@@ -136,8 +136,8 @@ class LocalStorageManager {
                 {
                     id: "a3",
                     type: "outdoor",
-                    nameKey: "sample_outdoor_name",
-                    descKey: "sample_outdoor_desc",
+                    name: "sample_outdoor_name",
+                    description: "sample_outdoor_desc",
                     duration: 180,
                     rating: 5,
                     link: "",
@@ -146,8 +146,8 @@ class LocalStorageManager {
                 {
                     id: "a4",
                     type: "lofi-music",
-                    nameKey: "sample_lofi_music_name",
-                    descKey: "sample_lofi_music_desc",
+                    name: "sample_lofi_music_name",
+                    description: "sample_lofi_music_desc",
                     duration: 120,
                     rating: 4,
                     link: "",
