@@ -1,4 +1,17 @@
 /* Modal + Overlay (kleine Ergänzungen) */
+
+
+
+@media (max-width: 767px) {
+    .hidden-mobile {
+        display: none !important;
+    }
+    .move-container {
+        top: 500px;
+    }
+}
+
+
 .overlay {
     position: fixed;
     inset: 0;
@@ -101,3 +114,5 @@
 .hidden {
     display: none !important;
 }
+
+
