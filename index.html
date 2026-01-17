@@ -81,7 +81,7 @@
       <span class="material-symbols-outlined">menu</span>
     </button>
 
-    <label class="flex flex-col flex-1 min-w-0 !h-10 max-w-[420px]">
+  <label class="flex flex-col flex-1 min-w-0 !h-10 max-w-full sm:max-w-[420px]">
       <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
         <div class="text-slate-500 dark:text-[#c9b292] flex border-none bg-slate-100 dark:bg-[#483923] items-center justify-center pl-4 rounded-l-lg border-r-0">
           <span class="material-symbols-outlined text-xl">search</span>
@@ -96,17 +96,14 @@
     </label>
   </div>
 
-  <div class="flex gap-3">
+  <div id="headerRight" class="flex gap-2 shrink-0">
     <button id="btnTheme"
-            class="flex items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-slate-100 dark:bg-[#483923] hover:bg-slate-200 dark:hover:bg-[#5a4a32] text-slate-900 dark:text-white transition-colors"
-            data-i18n-title="theme_title"
-            title="Theme">
+            class="flex items-center justify-center overflow-hidden rounded-lg h-10 w-10 bg-slate-100 dark:bg-[#483923] hover:bg-slate-200 dark:hover:bg-[#5a4a32] text-slate-900 dark:text-white transition-colors">
       <span class="material-symbols-outlined text-xl">dark_mode</span>
     </button>
+
     <button id="btnLang"
-            class="flex items-center justify-center overflow-hidden rounded-lg h-10 px-3 bg-slate-100 dark:bg-[#483923] hover:bg-slate-200 dark:hover:bg-[#5a4a32] text-slate-900 dark:text-white transition-colors font-bold text-xs"
-            data-i18n-title="language_title"
-            title="Language">
+            class="hidden sm:flex items-center justify-center overflow-hidden rounded-lg h-10 px-3 bg-slate-100 dark:bg-[#483923] hover:bg-slate-200 dark:hover:bg-[#5a4a32] text-slate-900 dark:text-white transition-colors font-bold text-xs">
       EN
     </button>
   </div>
@@ -470,8 +467,10 @@
 <!-- Modal: Browse / Search / Sort -->
 <div id="modalBrowse" class="hidden fixed inset-0 z-50" style="overflow: auto; top: 70px;">
   <div class="absolute inset-0 bg-black/60"></div>
-  <div class="relative w-full h-full flex items-center justify-center p-4 move-container">
-    <div class="w-full max-w-5xl bg-white dark:bg-background-dark border border-slate-200 dark:border-[#483923] rounded-2xl p-6 text-slate-900 dark:text-white">
+
+  <!-- Wrapper: auf Mobile oben starten, ab md mittig -->
+  <div class="relative w-full min-h-full flex items-start md:items-center justify-center p-3 sm:p-4">
+    <div class="w-full max-w-5xl bg-white dark:bg-background-dark border border-slate-200 dark:border-[#483923] rounded-2xl p-4 sm:p-6 text-slate-900 dark:text-white">
       <div class="flex items-center justify-between">
         <h2 id="browseTitle" class="text-2xl font-black text-slate-900 dark:text-white" data-i18n="browse_title">Browse Activities</h2>
         <button class="text-[#c9b292] hover:text-primary" data-close="modalBrowse">
@@ -514,8 +513,8 @@
 <!-- Modal: Add Activity form -->
 <div id="modalForm" class="hidden fixed inset-0 z-50">
   <div class="absolute inset-0 bg-black/60"></div>
-  <div class="relative w-full h-full flex items-center justify-center p-4">
-    <div class="w-full max-w-xl bg-white dark:bg-surface-dark border border-[#483923] rounded-2xl p-6">
+  <div class="relative w-full h-full flex items-start sm:items-center justify-center p-0 sm:p-4">
+    <div class="w-full h-full sm:h-auto sm:max-w-5xl bg-white dark:bg-background-dark border border-slate-200 dark:border-[#483923] sm:rounded-2xl p-4 sm:p-6 text-slate-900 dark:text-white overflow-y-auto">
       <div class="flex items-center justify-between">
         <h2 class="text-2xl font-black" data-i18n="add_activity_title">Add Activity</h2>
         <button class="text-slate-500 hover:text-primary" data-close="modalForm">
