@@ -120,6 +120,21 @@ window.LanguageService = (() => {
             type_movie: "Movie",
             type_game: "Game",
             type_outdoor: "Outdoor",
+            type_lofi: "Lofi Music",
+            type_writing: "Writing",
+            type_reading: "Reading",
+            type_cooking: "Cooking",
+            type_exercise: "Exercise",
+            type_creative: "Creative",
+            type_social: "Social",
+            type_relaxation: "Relaxation",
+            type_music: "Music",
+            type_art: "Art",
+            type_travel: "Travel",
+            
+            
+            
+            
 
             sample_movie_name: "Sci-Fi Film",
             sample_movie_desc: "A futuristic action and adventure film.",
@@ -259,6 +274,18 @@ window.LanguageService = (() => {
             type_movie: "Film",
             type_game: "Spiel",
             type_outdoor: "Outdoor",
+            type_lofi: "Lofi Musik",
+            type_writing: "Schreiben",
+            type_reading: "Lesen",
+            type_cooking: "Kochen",
+            type_exercise: "Sport",
+            type_creative: "Kreativ",
+            type_social: "Sozial",
+            type_relaxation: "Entspannung",
+            type_music: "Musik",
+            type_art: "Kunst",
+            type_travel: "Reisen",
+            
 
             sample_movie_name: "Sci-Fi Film",
             sample_movie_desc: "Ein futuristischer Action- und Abenteuerfilm.",

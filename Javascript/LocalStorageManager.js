@@ -110,7 +110,7 @@ class LocalStorageManager {
         // Demo / default data (i18n based)
         const state = {
             version: 1,
-            categories: ["movie", "game", "outdoor", "lofi-music", "reading", "cooking", "exercise", "creative", "social", "relaxation",
+            categories: ["movie", "game", "outdoor", "lofi", "reading", "cooking", "exercise", "creative", "social", "relaxation",
                 "music", "art", "writing", "travel"
             ],
             stats: { randomClicks: 0, history: [] },
@@ -147,7 +147,7 @@ class LocalStorageManager {
                 },
                 {
                     id: "a4",
-                    type: "lofi-music",
+                    type: "lofi",
                     name: "sample_lofi_music_name",
                     description: "sample_lofi_music_desc",
                     duration: 120,
@@ -247,16 +247,6 @@ class LocalStorageManager {
                 },
                 {
                     id: "a14",
-                    type: "writing",
-                    name: "sample_writing_name",
-                    description: "sample_writing_desc",
-                    duration: 120,
-                    rating: 4,
-                    link: "",
-                    image: "",
-                },
-                {
-                    id: "a15",
                     type: "travel",
                     name: "sample_travel_name",
                     description: "sample_travel_desc",
