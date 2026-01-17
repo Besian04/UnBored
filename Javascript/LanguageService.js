@@ -138,6 +138,8 @@ window.LanguageService = (() => {
 
             history_title: "Recently picked",
             history_empty: "No activity picked yet.",
+
+            delete_btn: "Delete",
         },
 
         de: {
@@ -275,6 +277,8 @@ window.LanguageService = (() => {
 
             history_title: "Zuletzt ausgewählt",
             history_empty: "Noch keine Aktivität ausgewählt.",
+
+            delete_btn: "Löschen",
         },
     };
 
