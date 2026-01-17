@@ -465,14 +465,19 @@
 
 
 <!-- Modal: Browse / Search / Sort -->
-<div id="modalBrowse" class="hidden fixed inset-0 z-50" style="overflow: auto; top: 70px;">
+<div id="modalBrowse" class="hidden fixed inset-0 z-50">
   <div class="absolute inset-0 bg-black/60"></div>
 
   <!-- Wrapper: auf Mobile oben starten, ab md mittig -->
-  <div class="relative w-full min-h-full flex items-start md:items-center justify-center p-3 sm:p-4">
-    <div class="w-full max-w-5xl bg-white dark:bg-background-dark border border-slate-200 dark:border-[#483923] rounded-2xl p-4 sm:p-6 text-slate-900 dark:text-white">
+  <div class="relative w-full h-full flex items-start md:items-center justify-center p-3 sm:p-4">
+
+    <div class="w-full max-w-5xl bg-white dark:bg-background-dark border border-slate-200 dark:border-[#483923] rounded-2xl p-4 sm:p-6 text-slate-900 dark:text-white
+                max-h-[calc(100vh-24px)] md:max-h-[90vh] overflow-y-auto">
+
       <div class="flex items-center justify-between">
-        <h2 id="browseTitle" class="text-2xl font-black text-slate-900 dark:text-white" data-i18n="browse_title">Browse Activities</h2>
+        <h2 id="browseTitle" class="text-2xl font-black text-slate-900 dark:text-white" data-i18n="browse_title">
+          Browse Activities
+        </h2>
         <button class="text-[#c9b292] hover:text-primary" data-close="modalBrowse">
           <span class="material-symbols-outlined">close</span>
         </button>
