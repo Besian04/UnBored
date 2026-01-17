@@ -108,49 +108,49 @@
 
 <div class="flex flex-1 overflow-hidden">
   <!-- Sidebar (categories + playlists + export/import) -->
-  <aside class="hidden md:flex flex-col w-64 bg-white dark:bg-surface-darker border-r border-slate-200 dark:border-[#483923] flex-none">
-    <div class="flex flex-col gap-4 p-4">
+  <aside class="hidden md:flex flex-col w-64 bg-white dark:bg-surface-darker border-r border-slate-200 dark:border-[#483923] flex-none overflow-hidden">
+    <div class="flex flex-col gap-4 p-4 overflow-y-auto flex-1 min-h-0">
 
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-2 flex-none">
         <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:bg-[#483923] dark:text-white group transition-all" href="#">
           <span class="material-symbols-outlined text-2xl group-hover:scale-105 transition-transform">dashboard</span>
           <p class="text-sm font-medium leading-normal" data-i18n="nav_dashboard">Dashboard</p>
         </a>
       </div>
 
-      <div class="h-px bg-slate-200 dark:bg-[#483923] my-2"></div>
+      <div class="h-px bg-slate-200 dark:bg-[#483923] my-2 flex-none"></div>
 
-      <div class="px-3">
-        <div class="flex items-center justify-between mb-3">
+      <div class="px-3 flex flex-col min-h-0 flex-1">
+        <div class="flex items-center justify-between mb-3 flex-none">
           <h3 class="text-xs font-bold uppercase text-slate-400 dark:text-[#887050] tracking-wider" data-i18n="sidebar_categories">Categories</h3>
 
           <button id="btnAddCategory"
-                  class="text-xs font-extrabold text-primary hover:text-primary-hover flex items-center gap-1 px-2 py-1 rounded-md hover:bg-primary/10 transition-colors">
+                  class="text-xs font-extrabold text-primary hover:text-primary-hover flex items-center gap-1 px-2 py-1 rounded-md hover:bg-primary/10 transition-colors flex-none">
             <span class="material-symbols-outlined text-[16px]">add</span>
             <span data-i18n="common_add">Add</span>
           </button>
         </div>
 
-        <div id="sidebarCategories" class="flex flex-col gap-1">
+        <div id="sidebarCategories" class="flex flex-col gap-1 overflow-y-auto pr-2 min-h-0">
           <!-- filled by JS -->
         </div>
       </div>
 
-      <div class="h-px bg-slate-200 dark:bg-[#483923] my-2"></div>
+      <div class="h-px bg-slate-200 dark:bg-[#483923] my-2 flex-none"></div>
 
       <!-- Playlists section -->
-      <div class="px-3">
-        <div class="flex items-center justify-between mb-3">
+      <div class="px-3 flex flex-col min-h-0 flex-1">
+        <div class="flex items-center justify-between mb-3 flex-none">
           <h3 class="text-xs font-bold uppercase text-slate-400 dark:text-[#887050] tracking-wider" data-i18n="sidebar_playlists">Playlists</h3>
 
           <button id="btnAddPlaylist"
-                  class="text-xs font-extrabold text-primary hover:text-primary-hover flex items-center gap-1 px-2 py-1 rounded-md hover:bg-primary/10 transition-colors">
+                  class="text-xs font-extrabold text-primary hover:text-primary-hover flex items-center gap-1 px-2 py-1 rounded-md hover:bg-primary/10 transition-colors flex-none">
             <span class="material-symbols-outlined text-[16px]">add</span>
             <span data-i18n="common_add">Add</span>
           </button>
         </div>
 
-        <div id="sidebarPlaylists" class="flex flex-col gap-1">
+        <div id="sidebarPlaylists" class="flex flex-col gap-1 overflow-y-auto pr-2 min-h-0">
           <!-- filled by JS -->
         </div>
       </div>
