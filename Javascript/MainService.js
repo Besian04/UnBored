@@ -172,4 +172,48 @@ function bindTopButtons() {
         });
     }
 
+    // Mobile
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("sidebarOverlay");
+    const btnSidebar = document.getElementById("btnSidebar");
+
+    function isMobile() {
+        return window.innerWidth < 768;
+    }
+
+    function openSidebar() {
+        if (!sidebar) return;
+        sidebar.classList.remove("-translate-x-full");
+        overlay?.classList.remove("hidden");
+    }
+
+    function closeSidebar() {
+        if (!sidebar) return;
+        sidebar.classList.add("-translate-x-full");
+        overlay?.classList.add("hidden");
+    }
+
+    // expose once
+    window.closeSidebar = closeSidebar;
+
+    btnSidebar?.addEventListener("click", () => {
+        if (!sidebar) return;
+        const isOpen = !sidebar.classList.contains("-translate-x-full");
+        if (isOpen) closeSidebar();
+        else openSidebar();
+    });
+
+    overlay?.addEventListener("click", closeSidebar);
+
+    window.addEventListener("resize", () => {
+        if (!sidebar) return;
+
+        if (!isMobile()) {
+            overlay?.classList.add("hidden");
+            sidebar.classList.remove("-translate-x-full");
+        } else {
+            closeSidebar();
+        }
+    });
+
 }

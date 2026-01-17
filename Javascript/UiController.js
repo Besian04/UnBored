@@ -357,12 +357,17 @@ class UiController {
             a.addEventListener("click", () => {
                 this.renderBrowse(cat);
                 document.getElementById("modalBrowse")?.classList.remove("hidden");
+
+                // close drawer only on mobile
+                if (window.innerWidth < 768) window.closeSidebar?.();
             });
 
             b.addEventListener("click", () => {
-                this.renderBrowse(cat);
                 this.activityRepository.deleteCategory(String(cat).toLowerCase());
                 this.renderDashboard();
+
+                // close drawer only on mobile
+                if (window.innerWidth < 768) window.closeSidebar?.();
             });
 
             wrap.appendChild(a);

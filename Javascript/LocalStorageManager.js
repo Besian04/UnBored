@@ -187,7 +187,7 @@ class LocalStorageManager {
                 },
                 {
                     id: "a8",
-                    type: "creative",   
+                    type: "creative",
                     name: "sample_creative_name",
                     description: "sample_creative_desc",
                     duration: 120,

@@ -66,8 +66,7 @@
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white overflow-hidden h-screen flex flex-col font-display">
 
 <!-- Topbar (logo, search, theme/lang buttons) -->
-<header class="flex-none flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#483923] bg-white dark:bg-surface-darker px-6 py-3 z-20">
-  <div class="flex items-center gap-8">
+<header class="flex-none flex items-center justify-between border-b border-solid border-slate-200 dark:border-[#483923] bg-white dark:bg-surface-darker px-3 sm:px-6 py-3 z-20">  <div class="flex items-center gap-3 sm:gap-8 flex-1 min-w-0">
     <div class="flex items-center gap-3 text-slate-900 dark:text-white">
       <div class="size-8 text-primary flex items-center justify-center">
         <span class="material-symbols-outlined text-3xl">local_activity</span>
@@ -75,7 +74,14 @@
       <h2 class="hidden-mobile text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Unbored</h2>
     </div>
 
-    <label class="flex flex-col min-w-40 !h-10 max-w-64 md:flex">
+    <!-- Mobile: Sidebar Toggle Button -->
+    <button id="btnSidebar"
+            class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-slate-200 dark:border-[#483923]
+                 bg-white/60 dark:bg-[#1a140d]/30 text-slate-700 dark:text-white">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+
+    <label class="flex flex-col flex-1 min-w-0 !h-10 max-w-[420px]">
       <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
         <div class="text-slate-500 dark:text-[#c9b292] flex border-none bg-slate-100 dark:bg-[#483923] items-center justify-center pl-4 rounded-l-lg border-r-0">
           <span class="material-symbols-outlined text-xl">search</span>
@@ -106,9 +112,25 @@
   </div>
 </header>
 
-<div class="flex flex-1 overflow-hidden">
+<div class="flex flex-1 overflow-hidden relative">
   <!-- Sidebar (categories + playlists + export/import) -->
-  <aside class="hidden md:flex flex-col w-64 bg-white dark:bg-surface-darker border-r border-slate-200 dark:border-[#483923] flex-none overflow-hidden">
+  <aside id="sidebar"
+         class="
+         fixed md:static
+         top-[64px] md:top-0
+         h-[calc(100vh-64px)] md:h-auto
+         left-0
+         z-50 md:z-auto
+         w-72 md:w-64
+         bg-white dark:bg-surface-darker
+         border-r border-slate-200 dark:border-[#483923]
+         flex flex-col
+         -translate-x-full md:translate-x-0
+         transition-transform duration-300 ease-in-out
+         md:shrink-0
+         overflow-hidden
+       ">
+
     <div class="flex flex-col gap-4 p-4 overflow-y-auto flex-1 min-h-0">
 
       <div class="flex flex-col gap-2 flex-none">
@@ -197,6 +219,10 @@
       </div>
     </div>
   </aside>
+
+  <!-- Mobile overlay -->
+  <div id="sidebarOverlay"
+       class="fixed inset-0 z-40 bg-black/40 hidden md:hidden"></div>
 
   <!-- Main content (hero, actions, lists) -->
   <main class="flex-1 overflow-y-auto relative scroll-smooth">
