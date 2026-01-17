@@ -221,13 +221,20 @@ class UiController {
         const searchInput = document.getElementById("searchInput");
         if (searchInput) {
             searchInput.addEventListener("input", () => {
-                const q = searchInput.value || "";
+                const q = (searchInput.value || "").trim();
 
-                if (q.trim().length > 0) {
+                const modal = document.getElementById("modalBrowse");
+
+                if (q.length > 0) {
                     this.renderBrowse(null, q);
-                    document.getElementById("modalBrowse")?.classList.remove("hidden");
+                    modal?.classList.remove("hidden");
+
+                    // Mobile: wenn Suche aufgeht, Sidebar einklappen (falls offen)
+                    if (window.innerWidth < 768) window.closeSidebar?.();
                 } else {
-                    this.renderBrowse();
+                    // wenn nichts gesucht wird: modal zu und grid resetten
+                    modal?.classList.add("hidden");
+                    this.renderBrowse(); //falls browse grid state refreshen will
                 }
             });
         }
