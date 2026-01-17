@@ -373,35 +373,37 @@
         </div>
 
         <!-- Filters -->
-        <div class="grid grid-cols-2 gap-3 w-full sm:w-48">
-          <div>
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#c9b292]"
-                   data-i18n="filter_min">
-              Min
-            </label>
-            <input id="filterMin"
-                   type="number"
-                   min="0"
-                   step="5"
-                   class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923]
-                          border-none text-slate-900 dark:text-white
-                          h-10 px-3"
-                   value="0">
-          </div>
+        <div class="ml-auto w-full sm:w-56">
+          <div class="grid grid-cols-2 gap-3">
+            <div class="flex flex-col">
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#c9b292]"
+                     data-i18n="filter_min">
+                Min minutes
+              </label>
+              <input id="filterMin"
+                     type="number"
+                     min="0"
+                     step="5"
+                     class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923]
+                    border-none text-slate-900 dark:text-white
+                    h-10 px-3"
+                     value="0">
+            </div>
 
-          <div>
-            <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#c9b292]"
-                   data-i18n="filter_max">
-              Max
-            </label>
-            <input id="filterMax"
-                   type="number"
-                   min="0"
-                   step="5"
-                   class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923]
-                          border-none text-slate-900 dark:text-white
-                          h-10 px-3"
-                   value="9999">
+            <div class="flex flex-col">
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-[#c9b292]"
+                     data-i18n="filter_max">
+                Max minutes
+              </label>
+              <input id="filterMax"
+                     type="number"
+                     min="0"
+                     step="5"
+                     class="mt-1 w-full rounded-lg bg-slate-100 dark:bg-[#483923]
+                    border-none text-slate-900 dark:text-white
+                    h-10 px-3"
+                     value="9999">
+            </div>
           </div>
         </div>
 
