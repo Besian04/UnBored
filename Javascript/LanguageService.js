@@ -133,15 +133,145 @@ window.LanguageService = (() => {
             type_travel: "Travel",
             
             
-            
-            
-
+            //Movie
+            movie_night_name: "Movie Night",
+            movie_night_desc: "Watch a movie you’ve never seen before and relax for the evening.",
+            classic_movie_name: "Classic Film",
+            classic_movie_desc: "Discover a classic movie from a different decade.",
+            short_films_name: "Short Film Session",
+            short_films_desc: "Watch a collection of short films or mini-documentaries.",
             sample_movie_name: "Sci-Fi Film",
             sample_movie_desc: "A futuristic action and adventure film.",
+
+            //Game
+            board_game_name: "Board Game Evening",
+            board_game_desc: "Play a board or card game with friends or family.",
+            video_game_name: "Video Game Session",
+            video_game_desc: "Spend some time playing your favorite video game.",
+            puzzle_game_name: "Puzzle Challenge",
+            puzzle_game_desc: "Solve puzzles or brain teasers to challenge your mind.",
             sample_game_name: "Game Night",
             sample_game_desc: "Play strategy and party games with friends.",
+
+            //Outdoor
+            nature_walk_name: "Nature Walk",
+            nature_walk_desc: "Take a walk outside and enjoy fresh air and nature.",
+            bike_ride_name: "Bike Ride",
+            bike_ride_desc: "Go for a relaxing or energetic bike ride.",
+            outdoor_photography_name: "Outdoor Photography",
+            outdoor_photography_desc: "Take photos of interesting places or landscapes outside.",
             sample_outdoor_name: "Hiking",
             sample_outdoor_desc: "A beautiful hike through nature.",
+
+            //Lofi-Music
+            lofi_study_name: "Lofi Study Session",
+            lofi_study_desc: "Listen to calm lofi beats while studying or working.",
+            relax_music_name: "Relaxing Music Break",
+            relax_music_desc: "Take a short break with relaxing background music.",
+            night_lofi_name: "Late Night Lofi",
+            night_lofi_desc: "Wind down in the evening with smooth lofi sounds.",
+            sample_lofi_music_name: "Lofi Cleaning Session",
+            sample_lofi_music_desc: "Clean your space while enjoying lofi music.",
+
+            //Reading
+            reading_chapter_name: "Read a Book Chapter",
+            reading_chapter_desc: "Read one chapter of a book you enjoy.",
+            article_reading_name: "Article Reading",
+            article_reading_desc: "Read an interesting article or blog post.",
+            magazine_reading_name: "Magazine Time",
+            magazine_reading_desc: "Browse through a magazine or digital journal.",
+            sample_reading_name: "Reading",
+            sample_reading_desc: "Read a chapter of a book you enjoy.",
+
+            //Cooking
+            simple_cooking_name: "Cook a Simple Meal",
+            simple_cooking_desc: "Prepare a quick and easy meal for yourself.",
+            new_recipe_name: "Try a New Recipe",
+            new_recipe_desc: "Cook something new you’ve never tried before.",
+            baking_name: "Bake Something Sweet",
+            baking_desc: "Bake cookies, cake, or another sweet treat.",
+            sample_cooking_name: "Cooking",
+            sample_cooking_desc: "Cook a simple meal or try a new recipe.",
+
+            //Exercise
+            quick_workout_name: "Quick Workout",
+            quick_workout_desc: "Do a short workout to get your body moving.",
+            stretching_name: "Stretching Session",
+            stretching_desc: "Stretch your muscles to relax and improve flexibility.",
+            home_training_name: "Home Training",
+            home_training_desc: "Train at home using bodyweight exercises.",
+            sample_exercise_name: "Exercise",
+            sample_exercise_desc: "A short workout to get moving.",
+
+            //Creative
+            drawing_name: "Drawing Session",
+            drawing_desc: "Draw or sketch whatever comes to your mind.",
+            diy_project_name: "DIY Project",
+            diy_project_desc: "Create something small using materials you have.",
+            crafting_name: "Crafting Time",
+            crafting_desc: "Do a creative craft or handmade project.",
+            sample_creative_name: "Creative Project",
+            sample_creative_desc: "Draw, craft, or build something small.",
+
+            //Social
+            meet_friends_name: "Meet Friends",
+            meet_friends_desc: "Spend time with friends or family.",
+            phone_call_name: "Phone Call",
+            phone_call_desc: "Call someone you haven’t talked to in a while.",
+            game_night_name: "Game Night",
+            game_night_desc: "Organize a small game night with others.",
+            sample_social_name: "Meet Friends",
+            sample_social_desc: "Spend time with friends or family.",
+
+            //Relaxation
+            meditation_name: "Meditation Break",
+            meditation_desc: "Take a few minutes to meditate and clear your mind.",
+            breathing_name: "Breathing Exercise",
+            breathing_desc: "Do a short breathing exercise to relax.",
+            quiet_time_name: "Quiet Time",
+            quiet_time_desc: "Sit quietly and take a break from screens.",
+            sample_relaxation_name: "Relaxation",
+            sample_relaxation_desc: "Take a break and unwind.",
+
+            //Music
+            listen_music_name: "Listen to Music",
+            listen_music_desc: "Listen to your favorite songs or albums.",
+            discover_music_name: "Discover New Music",
+            discover_music_desc: "Explore new artists or genres.",
+            music_practice_name: "Music Practice",
+            music_practice_desc: "Practice playing an instrument or singing.",
+            sample_music_name: "Music",
+            sample_music_desc: "Listen to music or learn a new song.",
+
+            //Art
+            visit_exhibition_name: "Visit an Exhibition",
+            visit_exhibition_desc: "Visit an art exhibition or gallery (online or offline).",
+            art_creation_name: "Art Creation",
+            art_creation_desc: "Create your own artwork using any medium.",
+            art_inspiration_name: "Art Inspiration",
+            art_inspiration_desc: "Look at artworks for inspiration.",
+            sample_art_name: "Art",
+            sample_art_desc: "Visit an exhibition or make art.",
+
+            //Writing
+            journal_writing_name: "Journal Writing",
+            journal_writing_desc: "Write down your thoughts or feelings.",
+            short_story_name: "Short Story",
+            short_story_desc: "Write a short story or creative text.",
+            planning_notes_name: "Planning Notes",
+            planning_notes_desc: "Write notes to plan your day or week.",
+            sample_writing_name: "Writing",
+            sample_writing_desc: "Write a short journal entry or story.",
+
+            //Travel
+            plan_trip_name: "Plan a Trip",
+            plan_trip_desc: "Plan a future trip or weekend getaway.",
+            explore_destinations_name: "Explore Destinations",
+            explore_destinations_desc: "Research interesting travel destinations.",
+            travel_memories_name: "Travel Memories",
+            travel_memories_desc: "Look at photos from past trips.",
+            sample_travel_name: "Travel Planning",
+            sample_travel_desc: "Plan a small trip or explore a new place.",
 
             filter_min: "Min minutes",
             filter_max: "Max minutes",
@@ -287,12 +417,147 @@ window.LanguageService = (() => {
             type_travel: "Reisen",
             
 
-            sample_movie_name: "Sci-Fi Film",
+            //Movie
+            movie_night_name: "Filmabend",
+            movie_night_desc: "Schau einen Film, den du noch nie gesehen hast, und entspanne am Abend.",
+            classic_movie_name: "Klassischer Film",
+            classic_movie_desc: "Entdecke einen Klassiker aus einer anderen Zeit.",
+            short_films_name: "Kurzfilm-Session",
+            short_films_desc: "Schau eine Auswahl an Kurzfilmen oder Mini-Dokumentationen.",
+            sample_movie_name: "Sci-Fi-Film",
             sample_movie_desc: "Ein futuristischer Action- und Abenteuerfilm.",
+
+            //Game
+            board_game_name: "Brettspielabend",
+            board_game_desc: "Spiele ein Brett- oder Kartenspiel mit Freunden oder Familie.",
+            video_game_name: "Videospiel-Session",
+            video_game_desc: "Verbringe etwas Zeit mit deinem Lieblingsvideospiel.",
+            puzzle_game_name: "Rätsel-Challenge",
+            puzzle_game_desc: "Löse Rätsel oder Denksportaufgaben, um deinen Kopf zu fordern.",
             sample_game_name: "Spieleabend",
-            sample_game_desc: "Strategie- und Partyspiele mit Freunden spielen.",
+            sample_game_desc: "Spiele Strategie- und Partyspiele mit Freunden.",
+
+            //Outdoor
+            nature_walk_name: "Spaziergang in der Natur",
+            nature_walk_desc: "Geh nach draußen, schnapp frische Luft und genieße die Natur.",
+            bike_ride_name: "Radtour",
+            bike_ride_desc: "Mach eine entspannte oder sportliche Fahrt mit dem Fahrrad.",
+            outdoor_photography_name: "Outdoor-Fotografie",
+            outdoor_photography_desc: "Mach Fotos von interessanten Orten oder Landschaften draußen.",
             sample_outdoor_name: "Wanderung",
             sample_outdoor_desc: "Eine schöne Wanderung durch die Natur.",
+
+            //Lofi-Music
+            lofi_study_name: "Lofi-Lernsession",
+            lofi_study_desc: "Hör ruhige Lofi-Beats beim Lernen oder Arbeiten.",
+            relax_music_name: "Entspannende Musikpause",
+            relax_music_desc: "Mach eine kurze Pause mit entspannender Hintergrundmusik.",
+            night_lofi_name: "Late-Night Lofi",
+            night_lofi_desc: "Komm am Abend mit sanften Lofi-Sounds zur Ruhe.",
+            sample_lofi_music_name: "Lofi aufräum Session",
+            sample_lofi_music_desc: "Räume deinen Platz auf und genieße Lofi-Musik",
+
+            //Reading
+            reading_chapter_name: "Ein Buchkapitel lesen",
+            reading_chapter_desc: "Lies ein Kapitel aus einem Buch, das dir gefällt.",
+            article_reading_name: "Artikel lesen",
+            article_reading_desc: "Lies einen interessanten Artikel oder Blogbeitrag.",
+            magazine_reading_name: "Magazinzeit",
+            magazine_reading_desc: "Blättere durch ein Magazin oder ein digitales Journal.",
+            sample_reading_name: "Lesen",
+            sample_reading_desc: "Lies ein Kapitel aus einem Buch, das dir gefällt.",
+
+            //Cooking
+            simple_cooking_name: "Einfache Mahlzeit kochen",
+            simple_cooking_desc: "Bereite dir eine schnelle und einfache Mahlzeit zu.",
+            new_recipe_name: "Neues Rezept ausprobieren",
+            new_recipe_desc: "Koche etwas Neues, das du noch nie probiert hast.",
+            baking_name: "Etwas Süßes backen",
+            baking_desc: "Backe Kekse, Kuchen oder eine andere süße Leckerei.",
+            sample_cooking_name: "Kochen",
+            sample_cooking_desc: "Koche eine einfache Mahlzeit oder probiere ein neues Rezept.",
+
+            //Exercise
+            quick_workout_name: "Kurzes Workout",
+            quick_workout_desc: "Mach ein kurzes Training, um in Bewegung zu kommen.",
+            stretching_name: "Dehn-Session",
+            stretching_desc: "Dehne deine Muskeln, um zu entspannen und beweglicher zu werden.",
+            home_training_name: "Training zuhause",
+            home_training_desc: "Trainiere zuhause mit Übungen mit dem eigenen Körpergewicht.",
+            sample_exercise_name: "Sport",
+            sample_exercise_desc: "Ein kurzes Workout, um in Bewegung zu kommen.",
+
+            //Creative
+            drawing_name: "Zeichnen",
+            drawing_desc: "Zeichne oder skizziere, was dir gerade einfällt.",
+            diy_project_name: "DIY-Projekt",
+            diy_project_desc: "Erstelle etwas Kleines mit Materialien, die du zur Verfügung hast.",
+            crafting_name: "Bastelzeit",
+            crafting_desc: "Mach ein kreatives Bastel- oder Handarbeitsprojekt.",
+            sample_creative_name: "Kreatives Projekt",
+            sample_creative_desc: "Zeichne, bastle oder baue etwas Kleines.",
+
+            //Social
+            meet_friends_name: "Freunde treffen",
+            meet_friends_desc: "Verbringe Zeit mit Freunden oder Familie.",
+            phone_call_name: "Telefonat",
+            phone_call_desc: "Ruf jemanden an, mit dem du schon lange nicht gesprochen hast.",
+            game_night_name: "Spieleabend",
+            game_night_desc: "Organisiere einen kleinen Spieleabend mit anderen.",
+            sample_social_name: "Freunde treffen",
+            sample_social_desc: "Verbringe Zeit mit Freunden oder Familie.",
+
+            //Relaxation
+            meditation_name: "Meditationspause",
+            meditation_desc: "Nimm dir ein paar Minuten zum Meditieren und Abschalten.",
+            breathing_name: "Atemübung",
+            breathing_desc: "Mach eine kurze Atemübung, um dich zu entspannen.",
+            quiet_time_name: "Ruhezeit",
+            quiet_time_desc: "Sitz ruhig da und gönn dir eine Pause von Bildschirmen.",
+            sample_relaxation_name: "Entspannung",
+            sample_relaxation_desc: "Mach eine Pause und entspanne dich.",
+
+            //Music
+            listen_music_name: "Musik hören",
+            listen_music_desc: "Hör deine Lieblingssongs oder -alben.",
+            discover_music_name: "Neue Musik entdecken",
+            discover_music_desc: "Entdecke neue Künstler oder Musikrichtungen.",
+            music_practice_name: "Musik üben",
+            music_practice_desc: "Übe ein Instrument zu spielen oder zu singen.",
+            sample_music_name: "Musik",
+            sample_music_desc: "Hör Musik oder lerne einen neuen Song.",
+
+            //Art
+            visit_exhibition_name: "Ausstellung besuchen",
+            visit_exhibition_desc: "Besuche eine Kunstausstellung oder Galerie (online oder vor Ort).",
+            art_creation_name: "Kunst gestalten",
+            art_creation_desc: "Erstelle dein eigenes Kunstwerk mit einem Medium deiner Wahl.",
+            art_inspiration_name: "Kunst-Inspiration",
+            art_inspiration_desc: "Schau dir Kunstwerke an und lass dich inspirieren.",
+            sample_art_name: "Kunst",
+            sample_art_desc: "Besuche eine Ausstellung oder gestalte Kunst.",
+
+            //Writing
+            journal_writing_name: "Tagebuch schreiben",
+            journal_writing_desc: "Schreib deine Gedanken oder Gefühle auf.",
+            short_story_name: "Kurzgeschichte",
+            short_story_desc: "Schreibe eine kurze Geschichte oder einen kreativen Text.",
+            planning_notes_name: "Planungsnotizen",
+            planning_notes_desc: "Schreibe Notizen, um deinen Tag oder deine Woche zu planen.",
+            sample_writing_name: "Schreiben",
+            sample_writing_desc: "Schreibe einen kurzen Tagebucheintrag oder eine Geschichte.",
+
+            //Travel
+            plan_trip_name: "Reise planen",
+            plan_trip_desc: "Plane eine zukünftige Reise oder einen Wochenendausflug.",
+            explore_destinations_name: "Reiseziele entdecken",
+            explore_destinations_desc: "Recherchiere interessante Reiseziele.",
+            travel_memories_name: "Reiseerinnerungen",
+            travel_memories_desc: "Schau dir Fotos von vergangenen Reisen an.",
+            sample_travel_name: "Reiseplanung",
+            sample_travel_desc: "Plane eine kleine Reise oder entdecke einen neuen Ort.",
+
+
 
             filter_min: "Min. Minuten",
             filter_max: "Max. Minuten",

@@ -47,6 +47,15 @@ class UiController {
         return a?.description || "—";
     }
 
+    normalizeForSearch(s) {
+     return String(s || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // entfernt Akzente (z.B. ä -> a + diacritic)
+        .replace(/ß/g, "ss")
+        .trim();
+}
+
     // ===== Timer Methods =====
     setupTimerButtons() {
         const btnStart = document.getElementById("btnStartTimer");
@@ -692,23 +701,29 @@ class UiController {
         grid.innerHTML = "";
         this.currentBrowsePlaylistId = null;
 
-        const q = String(searchQuery || "").trim().toLowerCase();
+        const q = this.normalizeForSearch(searchQuery);
         const all = this.activityRepository.getActivityList() || [];
 
         let items = all;
-
+        // 1) Filter nach Kategorie (Type), wenn Sidebar-Button geklickt wurde
         if (filterType) {
-            items = items.filter((a) => a.type === filterType);
-        }
+          items = items.filter((a) => String(a.type) === String(filterType));
+}
 
         if (q) {
-            items = items.filter((a) => {
-                const name = String(a.name || "").toLowerCase();
-                const desc = String(a.description || "").toLowerCase();
-                const type = String(a.type || "").toLowerCase();
-                return name.includes(q) || desc.includes(q) || type.includes(q);
-            });
-        }
+          items = items.filter((a) => {
+            const name = this.normalizeForSearch(this.displayActivityName(a));
+            const desc = this.normalizeForSearch(this.displayActivityDesc(a));
+            const typeLabel = this.normalizeForSearch(this.displayType(a.type));
+
+            return (
+              name.includes(q) ||
+              desc.includes(q) ||
+              typeLabel.includes(q)
+            );
+        });
+    }
+
 
         const title = document.getElementById("browseTitle");
         if (title) {
