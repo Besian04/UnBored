@@ -4,6 +4,7 @@
 **Unbored** ist eine browserbasierte Webanwendung, die Nutzer:innen dabei unterstützt, passende Freizeitaktivitäten zu finden, wenn ihnen langweilig ist oder sie sich nicht entscheiden können.  
 Die App bietet Kategorien, Aktivitätenlisten, Suche, Sortierung, Bewertungen, Playlists sowie eine Random-Funktion.  
 Die Anwendung läuft vollständig clientseitig und speichert Daten im Browser (Local Storage). Es ist keine Registrierung und kein Server erforderlich.
+
 ---
 
 ## Ziele
