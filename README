@@ -1,117 +1,93 @@
-
-
-ReadMe
 # Unbored - Webapp gegen Langeweile
 
-## Kurzbeschreibung
-**Unbored** ist eine browserbasierte Webanwendung, die Nutzer:innen dabei unterstützt, passende Freizeitaktivitäten zu finden, wenn ihnen langweilig ist oder sie sich nicht entscheiden können.  
-Die App bietet Kategorien, Aktivitätenlisten, Suche, Sortierung, Bewertungen, Playlists sowie eine Random-Funktion.  
-Die Anwendung läuft vollständig clientseitig und speichert Daten im Browser (Local Storage). Es ist keine Registrierung und kein Server erforderlich.
+**Unbored** ist eine browserbasierte Webanwendung, die Nutzer:innen dabei unterstützt, passende Freizeitaktivitäten zu finden, wenn ihnen langweilig ist oder sie sich nicht entscheiden können.
+
 ---
 
+## Kurzbeschreibung
+Die App bietet Kategorien, Aktivitätenlisten, Suche, Sortierung, Bewertungen, Playlists sowie eine Random-Funktion.  
+Die Anwendung läuft vollständig **clientseitig** und speichert Daten im Browser (**Local Storage**). Es ist keine Registrierung und kein Server erforderlich.
+
 ## Ziele
-- Schnelle Vorschläge für Freizeitaktivitäten
-- Unterstützung bei der Entscheidungsfindung
-- Anpassung durch Filter, Bewertungen, Sprache und Design
-- Nutzung ohne Registrierung und ohne Backend
+* **Schnelligkeit:** Sofortige Vorschläge für Freizeitaktivitäten.
+* **Entscheidungshilfe:** Unterstützung bei der Auswahl durch Filter und Zufallsfunktionen.
+* **Anpassbarkeit:** Personalisierung durch Bewertungen, Sprachen und Design-Themes.
+* **Einfachheit:** Nutzung ohne Registrierung und ohne Backend-Infrastruktur.
+
 ---
 
 ## Installation
-> Keine zusätzlichen Abhängigkeiten erforderlich!
+> **Keine zusätzlichen Abhängigkeiten erforderlich!**
 
-1. Projekt als ZIP herunterladen und entpacken.
-2. Die Datei **`index.html`** im Browser öffnen (z.B. Chrome, Firefox, Edge).
-3. Optional: über einen lokalen Webserver (z.B. VS Code Live Server) starten.
+1. **Download:** Projekt als ZIP herunterladen und entpacken.
+2. **Start:** Die Datei `index.html` im Browser öffnen (z.B. Chrome, Firefox, Edge).
+3. **Optional:** Über einen lokalen Webserver (z.B. VS Code Live Server) starten.
 
-**Hinweis:**  
-Alle Daten werden im Browser (Local Storage) gespeichert.  
-Ein Reset ist über die App oder durch Löschen des Local Storage möglich.
+**Hinweis:** Alle Daten werden im Browser (Local Storage) gespeichert. Ein Reset ist über die App oder durch Löschen des Local Storage möglich.
+
 ---
 
 ## Verwendung (User Guide)
+
 ### Kategorien & Aktivitäten
-- Kategorien werden in der Sidebar angezeigt.
-- Klick auf eine Kategorie zeigt die zugehörigen Aktivitäten.
+* Kategorien werden in der Sidebar angezeigt.
+* Klick auf eine Kategorie zeigt die zugehörigen Aktivitäten.
 
-### Aktivitätsdetails
-- Klick auf eine Aktivität öffnet die Detailansicht mit Beschreibung, Dauer und Bewertung.
-
-### Suche & Sortierung
-- Aktivitäten können über die Suchleiste gefiltert werden.
-- Sortierung nach Name oder Bewertung (auf- und absteigend).
+### Suche, Sortierung & Details
+* **Details:** Klick auf eine Aktivität öffnet die Ansicht mit Beschreibung, Dauer und Bewertung.
+* **Suche:** Aktivitäten können über die Suchleiste gefiltert werden.
+* **Sortierung:** Nach Name oder Bewertung (auf- und absteigend).
 
 ### Random-Funktion
-- Der Random-Button wählt eine zufällige Aktivität.
-- Optional kann die Auswahl nach Dauer eingeschränkt werden.
+* Der Random-Button wählt eine zufällige Aktivität.
+* Optional kann die Auswahl nach **Dauer** eingeschränkt werden.
 
-### Aktivitäten & Kategorien hinzufügen
-- Kategorien und Aktivitäten können über Formulare hinzugefügt werden.
-
-### Playlists
-- Nutzer:innen können Playlists erstellen.
-- Aktivitäten können Playlists zugeordnet und daraus ausgewählt werden.
+### Aktivitäten & Playlists hinzufügen
+* **Hinzufügen:** Kategorien und Aktivitäten können über Formulare erstellt werden.
+* **Playlists:** Nutzer:innen können Playlists erstellen und Aktivitäten zuordnen.
 
 ### Sprache & Theme
-- Umschalten zwischen Deutsch und Englisch.
-- Umschalten zwischen Light- und Dark-Mode.
+* Umschalten zwischen **Deutsch** und **Englisch**.
+* Umschalten zwischen **Light-** und **Dark-Mode**.
+
 ---
 
-## MoSCoW-Kriterien
+## MoSCoW-Kriterien (Functional Requirements)
 
-## Functional Requirements
-### MUST
-- M1: Der Nutzer kann eine Liste der Kategorien ansehen.
-- M2: Der Nutzer kann eine Kategorie per Klick auswählen und dadurch eine Liste der Aktivitäten zugehörig der ausgewählten Kategorie ansehen.
-- M3: Wenn der Nutzer eine Kategorie ausgewählt hat, kann er per Klick eine Aktivität auswählen um deren Attribute und Beschreibung einzusehen.
-- M4: Wenn der Nutzer eine Playlist ausgewählt hat kann er per Klick eine Aktivität auswählen um deren Attribute und Beschreibung einzusehen.
-- M5: Der Nutzer kann ein vorgefertigtes Template ausfüllen und eine Kategorie hinzuzufügen.
-- M6: Der Nutzer kann ein vorgefertigtes Template ausfüllen und eine Aktivität hinzuzufügen.
-- M7: Der Nutzer kann eine Playlist erstellen.
-- M8: Der Nutzer kann eine erstellte Playlist ansehen und eine Aktivität daraus auswählen.
+| Priorität | ID | Beschreibung |
+| :--- | :--- | :--- |
+| **MUST** | M1-M2 | Kategorien ansehen/auswählen; Aktivitätenliste anzeigen. |
+| | M3-M4 | Details von Aktivitäten (auch aus Playlists) einsehen. |
+| | M5-M6 | Kategorien und Aktivitäten über Templates hinzufügen. |
+| | M7-M8 | Playlists erstellen, ansehen und Aktivitäten daraus wählen. |
+| **SHOULD** | S1-S2 | Dark/Light Mode & Sprachwechsel (DE/EN). |
+| | S3-S4 | Bewertungen vergeben (0-10 Sterne) & Sortierfunktionen. |
+| | S5-S6 | Random-Button (optional mit Dauer-Einschränkung). |
+| **COULD** | C1-C2 | Weitere Templates; Export/Import als Textdatei. |
+| | C3-C4 | Freie Attributbestimmung & Playlist-Erstellung. |
+| **WON’T** | W1-W3 | Kein Streaming, keine soziale Plattform, kein Login. |
 
-### SHOULD 
-- S1: Der Nutzer kann zwischen Dark und Light Mode wechseln.
-- S2: Der Nutzer hat die Möglichkeit zwischen Deutsch und Englisch zu wechseln.
-- S3: Der Nutzer kann einer Aktivität eine Bewertung von 0 bis 10 Sternen zuweisen.
-- S4: Der Nutzer kann die angezeigte Liste von Aktivitäten nach Alphabet oder Bewertung auf oder absteigend sortieren.
-- S5: Der Nutzer kann durch Klicken des „random“ buttons eine zufällige Aktivität auswählen.
-- S6: Der Nutzer kann angeben nur zufällige Aktivitäten einer gewissen Dauer zufällig zugeordnet zu bekommen
-
-### COULD
-- C1: Der Nutzer kann ein vorgefertigtes Template ausfüllen und eine Kategorie hinzuzufügen.
-- C2: Der Nutzer kann den gesamten Zustand der Applikation als Textdatei exportieren/importieren.
-- C3: Der Nutzer kann beim Hinzufügen einer Aktivität alle Attribute frei bestimmen.
-- C4: Der Nutzer kann Playlists von Aktivitäten erstellen.
-
-### WON’T
-- W1: Die Webapp unterstützt kein Streaming in der Kategorie Film/Serie und Spiele.
-- W2: Die Webapp ist keine Soziale Plattform, wo sich die User austauschen können.
-- W3: Die Webapp wird kein Login haben.
 ---
 
 ## Non-Functional Requirements
-### Performance
-- P1: Nach Auswahl einer Kategorie soll die Webapp innerhalb von 2–3 Sekunden reagieren.
 
-### Stability:
-- S1: Stürzt die Webapp ab oder wird geschlossen, soll sie nach dem erneuten Öffnen den letzten Zustand wiederherstellen.
+### Performance & Stabilität
+* **P1:** Reaktion innerhalb von 2–3 Sekunden nach Kategorieauswahl.
+* **S1:** Wiederherstellung des letzten Zustands nach Neustart.
 
-### Usability:
-- U1: Inhalte werden über den Local Storage gespeichert.
-- U2: Grundfunktionen sollen innerhalb weniger Minuten initial geladen sein.
-- U3: Die Benutzeroberfläche soll möglichst einfach und intuitiv gestaltet sein.
+### Usability & Reliability
+* **U1-U2:** Speicherung via Local Storage; schneller initialer Ladevorgang.
+* **U3 / R1:** Intuitives UI und stabile Implementierung.
 
-### Reliability: 
-- R1: Die Anwendung soll robust und stabil implementiert sein, um zuverlässige Nutzung zu gewährleisten.
+### Compatibility & Internationalisierung
+* **CI1:** Lauffähig auf allen gängigen Browsern.
+* **CI2:** Unterstützung von Deutsch und Englisch.
+* **CI3:** Vollständig responsives Layout.
 
-### Compatibility & Internationalisierung:
-- CI1: Die Webapp soll auf allen gängigen Browsern funktionieren.
-- CI2: Unterstützt Deutsch und Englisch.
-- CI3: Das Layout soll vollständig responsiv sein.
 ---
 
 ## Team
-- Besian Alihajdaraj  
-- Vjollca Berbati  
-- Nicolas Dziwinsky  
-- David Ramberger
+* Besian Alihajdaraj
+* Vjollca Berbati
+* Nicolas Dziwinsky
+* David Ramberger
