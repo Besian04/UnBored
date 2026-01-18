@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seite nicht gefunden - Unbored</title>
+    <title>Page Not Found - Unbored</title>
     <style>
         /* Base reset */
         * {
@@ -12,19 +12,78 @@
             box-sizing: border-box;
         }
 
-        /* Page background + base layout */
+        /* Background */
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(to bottom,
+            #0c1445 0%,
+            #1a237e 30%,
+            #311b92 60%,
+            #4a148c 100%
+            );
             font-family: 'Arial', sans-serif;
             min-height: 100vh;
             overflow: hidden;
             color: white;
+            position: relative;
+        }
+
+        /* Decorative Volcano Background */
+        .volcano-bg {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .volcano-mountain {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 300px;
+            background: linear-gradient(to top, #37474f, #546e7a);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            border-radius: 10px 10px 0 0;
+        }
+
+        .volcano-lava {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(to top, #ff5722, #ff9800);
+            border-radius: 100px 100px 0 0;
+            filter: blur(5px);
+            opacity: 0.7;
+            animation: lava-glow 2s infinite alternate;
+        }
+
+        .mountain-2 {
+            width: 300px;
+            height: 200px;
+            left: 20%;
+            background: linear-gradient(to top, #455a64, #607d8b);
+            transform: translateX(0) rotate(-5deg);
+        }
+
+        .mountain-3 {
+            width: 250px;
+            height: 180px;
+            left: 70%;
+            background: linear-gradient(to top, #546e7a, #78909c);
+            transform: translateX(0) rotate(5deg);
         }
 
         /* Centered content wrapper */
         .container {
             position: relative;
-            z-index: 10;
+            z-index: 20;
             text-align: center;
             padding: 2rem;
             min-height: 100vh;
@@ -34,18 +93,46 @@
             align-items: center;
         }
 
+        /* Language selector */
+        .language-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        .lang-btn {
+            background: rgba(255, 204, 0, 0.2);
+            color: white;
+            border: 2px solid #FFCC00;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .lang-btn:hover {
+            background: #FFCC00;
+            color: #1a1a2e;
+        }
+
         /* 404 headline */
         .error-code {
             font-size: 8rem;
             font-weight: bold;
             margin-bottom: 1rem;
-            text-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            text-shadow:
+                    3px 3px 0 rgba(0,0,0,0.2),
+                    0 0 20px rgba(255, 204, 0, 0.5);
             color: #FFCC00;
+            animation: pulse-glow 2s infinite alternate;
         }
 
         .error-message {
             font-size: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             opacity: 0.9;
         }
 
@@ -63,21 +150,30 @@
             display: inline-block;
             margin-top: 2rem;
             font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
         .home-button:hover {
             background: #ffd83d;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(255, 204, 0, 0.4);
+            box-shadow: 0 10px 25px rgba(255, 204, 0, 0.6);
+        }
+
+        .home-button:active {
+            transform: translateY(0);
         }
 
         /* Pacman */
         .pacman {
             position: absolute;
-            width: 150px;
-            height: 150px;
-            transition: all 0.3s ease;
-            z-index: 5;
+            width: 100px;
+            height: 100px;
+            transition: all 0.1s ease;
+            z-index: 15;
+            filter: drop-shadow(0 5px 15px rgba(255, 204, 0, 0.5));
+            pointer-events: none;
         }
 
         .pacman-body {
@@ -86,200 +182,226 @@
             background: #FFCC00;
             border-radius: 50%;
             position: relative;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow:
+                    0 10px 20px rgba(0,0,0,0.2),
+                    inset 0 -8px 15px rgba(255, 153, 0, 0.4);
         }
 
         .pacman-mouth {
             position: absolute;
             width: 100%;
             height: 100%;
-            background: #1a1a2e;
+            background: linear-gradient(45deg, #1a1a2e, #2d1b3b);
             clip-path: polygon(50% 50%, 100% 0, 100% 100%);
-            animation: eat 0.5s infinite alternate;
+            animation: eat 0.3s infinite alternate;
         }
 
         .pacman-eye {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: #1a1a2e;
-            border-radius: 50%;
-            top: 35px;
-            left: 85px;
-            z-index: 2;
-        }
-
-        /* Ghost */
-        .ghost {
-            position: absolute;
-            width: 120px;
-            height: 120px;
-            transition: all 0.3s ease;
-            z-index: 4;
-        }
-
-        .ghost-body {
-            width: 100%;
-            height: 100%;
-            background: #FF5252;
-            border-radius: 60% 60% 0 0;
-            position: relative;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .ghost-eye {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            top: 35px;
-        }
-
-        .ghost-eye.left { left: 25px; }
-        .ghost-eye.right { right: 25px; }
-
-        .ghost-pupil {
             position: absolute;
             width: 10px;
             height: 10px;
             background: #1a1a2e;
             border-radius: 50%;
-            top: 5px;
-            left: 5px;
+            top: 25px;
+            left: 60px;
+            z-index: 2;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        /* Ghost */
+        .ghost {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            transition: all 0.1s ease;
+            z-index: 14;
+            filter: drop-shadow(0 5px 15px rgba(255, 82, 82, 0.4));
+            pointer-events: none;
+        }
+
+        .ghost-body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #FF5252, #FF8A80);
+            border-radius: 50% 50% 0 0;
+            position: relative;
+            box-shadow:
+                    0 10px 20px rgba(0,0,0,0.2),
+                    inset 0 -5px 10px rgba(255, 82, 82, 0.3);
+        }
+
+        .ghost-eye {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 50%;
+            top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .ghost-eye.left { left: 15px; }
+        .ghost-eye.right { right: 15px; }
+
+        .ghost-pupil {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #1a1a2e;
+            border-radius: 50%;
+            top: 4px;
+            left: 4px;
         }
 
         .ghost-bottom {
             position: absolute;
             width: 100%;
-            height: 20px;
+            height: 15px;
             bottom: 0;
             display: flex;
             justify-content: space-around;
         }
 
         .ghost-bottom-wave {
-            width: 20px;
-            height: 20px;
-            background: #FF5252;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(to top, #FF5252, #FF8A80);
             border-radius: 0 0 10px 10px;
         }
 
-        /* Floating background elements */
-        .floating {
+        /* Food items */
+        .food-item {
             position: absolute;
-            animation: float 6s ease-in-out infinite;
+            z-index: 10;
+            pointer-events: none;
+            font-size: 24px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            animation: float-food 3s ease-in-out infinite;
         }
 
-        .circle {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(255, 204, 0, 0.5);
+        .cookie { color: #d2691e; }
+        .star { color: gold; }
+        .cake { color: #ff69b4; }
+        .cherry { color: #ff0000; }
+
+        /* Score counter */
+        .score {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            z-index: 100;
+            border: 2px solid #FFCC00;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.7);
+        .score-value {
+            font-weight: bold;
+            color: #FFCC00;
         }
 
-        .power-pellet {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            animation: pulse 2s infinite alternate;
+        /* Collection effect */
+        .collection-effect {
+            position: absolute;
+            color: #FFCC00;
+            font-size: 30px;
+            font-weight: bold;
+            animation: collect-pop 0.5s forwards;
+            pointer-events: none;
+            z-index: 20;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+        /* Animations */
+        @keyframes lava-glow {
+            0%, 100% {
+                opacity: 0.5;
+                filter: blur(5px) brightness(1);
+            }
+            50% {
+                opacity: 0.8;
+                filter: blur(8px) brightness(1.5);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                text-shadow:
+                        3px 3px 0 rgba(0,0,0,0.2),
+                        0 0 20px rgba(255, 204, 0, 0.5);
+            }
+            100% {
+                text-shadow:
+                        3px 3px 0 rgba(0,0,0,0.2),
+                        0 0 30px rgba(255, 204, 0, 0.8),
+                        0 0 40px rgba(255, 204, 0, 0.6);
+            }
         }
 
         @keyframes eat {
             0% { clip-path: polygon(50% 50%, 100% 0, 100% 100%); }
-            100% { clip-path: polygon(50% 50%, 100% 30%, 100% 70%); }
+            50% { clip-path: polygon(50% 50%, 100% 20%, 100% 80%); }
+            100% { clip-path: polygon(50% 50%, 100% 0, 100% 100%); }
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.2); }
+        @keyframes float-food {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(10deg); }
         }
 
-        /* Particle background */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: particle-float 8s linear infinite;
-        }
-
-        @keyframes particle-float {
+        @keyframes collect-pop {
             0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
+                transform: scale(0.5) translateY(0);
                 opacity: 1;
             }
-            90% {
-                opacity: 1;
+            70% {
+                transform: scale(1.5) translateY(-20px);
+                opacity: 0.8;
             }
             100% {
-                transform: translateY(-100px) rotate(360deg);
+                transform: scale(1) translateY(-40px);
                 opacity: 0;
             }
         }
 
-        /* Responsive tweaks */
+        /* Responsive design */
         @media (max-width: 768px) {
-            .error-code {
-                font-size: 5rem;
-            }
-
-            .error-message {
-                font-size: 1.2rem;
-            }
-
-            .pacman {
-                width: 120px;
-                height: 120px;
-            }
-
-            .ghost {
-                width: 100px;
-                height: 100px;
-            }
+            .error-code { font-size: 5rem; }
+            .error-message { font-size: 1.2rem; }
+            .pacman { width: 80px; height: 80px; }
+            .ghost { width: 60px; height: 60px; }
+            .volcano-mountain { width: 300px; height: 200px; }
+            .mountain-2 { width: 200px; height: 150px; }
+            .mountain-3 { width: 180px; height: 130px; }
         }
     </style>
 </head>
 <body>
-<!-- Particle layer -->
-<div class="particles" id="particles"></div>
+<!-- Decorative Volcano Background -->
+<div class="volcano-bg">
+    <div class="volcano-mountain mountain-2"></div>
+    <div class="volcano-mountain"></div>
+    <div class="volcano-mountain mountain-3"></div>
+    <div class="volcano-lava"></div>
+</div>
 
-<!-- Floating background elements -->
-<div class="floating dot" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
-<div class="floating power-pellet" style="top: 70%; left: 85%; animation-delay: 1s;"></div>
-<div class="floating dot" style="top: 40%; left: 90%; animation-delay: 2s;"></div>
-<div class="floating dot" style="top: 80%; left: 15%; animation-delay: 3s;"></div>
-<div class="floating power-pellet" style="top: 30%; left: 5%; animation-delay: 4s;"></div>
+<!-- Score display -->
+<div class="score" id="score">
+    <span id="score-text">🍪 Score:</span>
+    <span class="score-value" id="score-value">0</span>
+</div>
 
-<!-- Pacman character -->
+<!-- Language selector -->
+<div class="language-switch">
+    <button class="lang-btn" id="lang-de">DE</button>
+    <button class="lang-btn" id="lang-en">EN</button>
+</div>
+
+<!-- Characters -->
 <div class="pacman" id="pacman">
     <div class="pacman-body">
         <div class="pacman-eye"></div>
@@ -287,7 +409,6 @@
     </div>
 </div>
 
-<!-- Ghost character -->
 <div class="ghost" id="ghost">
     <div class="ghost-body">
         <div class="ghost-eye left">
@@ -304,103 +425,271 @@
     </div>
 </div>
 
+<!-- Food items will be generated here -->
+<div id="food-container"></div>
+
 <!-- Main content -->
 <div class="container">
     <div class="error-code">404</div>
-    <div class="error-message">Oops! Diese Seite wurde von Pacman gefressen...</div>
-    <p>Pacman sucht nach der Seite, aber vielleicht existiert sie wirklich nicht.</p>
-    <a href="index.html" class="home-button">Zurück zur Startseite</a>
+    <div class="error-message" id="error-message">Oops! Diese Seite wurde von Pacman gefressen...</div>
+    <p id="description">Pacman sucht nach der Seite, aber vielleicht existiert sie wirklich nicht.</p>
+    <a href="index.html" class="home-button" id="home-button">Zurück zur Startseite</a>
 </div>
 
 <script>
-    // Pacman follows mouse
+    // Language texts
+    const texts = {
+        de: {
+            error: "Oops! Diese Seite wurde von Pacman gefressen...",
+            description: "Pacman sucht nach der Seite, aber vielleicht existiert sie wirklich nicht.",
+            button: "Zurück zur Startseite",
+            score: "🍪 Score:"
+        },
+        en: {
+            error: "Oops! This page has been eaten by Pacman...",
+            description: "Pacman is searching for the page, but maybe it doesn't really exist.",
+            button: "Back to Homepage",
+            score: "🍪 Score:"
+        }
+    };
+
+    // Game variables
+    let currentLanguage = 'de';
+    let score = 0;
+    let foods = [];
+    const foodTypes = [
+        { emoji: '🍪', class: 'cookie', points: 10 },
+        { emoji: '⭐', class: 'star', points: 20 },
+        { emoji: '🍰', class: 'cake', points: 15 },
+        { emoji: '🍒', class: 'cherry', points: 5 }
+    ];
+
+    // DOM elements
     const pacman = document.getElementById('pacman');
     const ghost = document.getElementById('ghost');
-    let mouseX = 0;
-    let mouseY = 0;
+    const scoreValue = document.getElementById('score-value');
+    const scoreText = document.getElementById('score-text');
+    const foodContainer = document.getElementById('food-container');
+    const errorMessage = document.getElementById('error-message');
+    const description = document.getElementById('description');
+    const homeButton = document.getElementById('home-button');
+
+    // Character positions
     let pacmanX = window.innerWidth / 2;
     let pacmanY = window.innerHeight / 2;
-    let ghostX = window.innerWidth / 3;
-    let ghostY = window.innerHeight / 3;
+    let ghostX = 100;
+    let ghostY = 100;
+    let ghostDirectionX = 1;
+    let ghostDirectionY = 1;
+    let ghostSpeed = 2;
 
+    // Mouse position
+    let mouseX = pacmanX;
+    let mouseY = pacmanY;
+
+    // Initialize
+    createFoodItems(15);
+    updateLanguage('de');
+    startGameLoop();
+
+    // Event listeners
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
 
-    // Pacman movement loop
+    document.getElementById('lang-de').addEventListener('click', () => updateLanguage('de'));
+    document.getElementById('lang-en').addEventListener('click', () => updateLanguage('en'));
+
+    // Create food items
+    function createFoodItems(count) {
+        for (let i = 0; i < count; i++) {
+            const food = document.createElement('div');
+            const type = foodTypes[Math.floor(Math.random() * foodTypes.length)];
+
+            food.className = `food-item ${type.class}`;
+            food.innerHTML = type.emoji;
+            food.dataset.points = type.points;
+            food.dataset.type = type.class;
+
+            // Random position (avoid edges)
+            const x = Math.random() * (window.innerWidth - 100) + 50;
+            const y = Math.random() * (window.innerHeight - 200) + 100;
+
+            food.style.left = x + 'px';
+            food.style.top = y + 'px';
+
+            // Random animation delay
+            food.style.animationDelay = Math.random() * 2 + 's';
+
+            foodContainer.appendChild(food);
+            foods.push({
+                element: food,
+                x: x,
+                y: y,
+                points: type.points
+            });
+        }
+    }
+
+    // Update language
+    function updateLanguage(lang) {
+        currentLanguage = lang;
+        errorMessage.textContent = texts[lang].error;
+        description.textContent = texts[lang].description;
+        homeButton.textContent = texts[lang].button;
+        scoreText.textContent = texts[lang].score;
+
+        // Update button states
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.style.background = btn.id.includes(lang) ? '#FFCC00' : 'rgba(255, 204, 0, 0.2)';
+            btn.style.color = btn.id.includes(lang) ? '#1a1a2e' : 'white';
+        });
+    }
+
+    // Game loop
+    function startGameLoop() {
+        function gameLoop() {
+            updatePacman();
+            updateGhost();
+            checkFoodCollisions();
+            requestAnimationFrame(gameLoop);
+        }
+        gameLoop();
+    }
+
+    // Update Pacman position
     function updatePacman() {
-        const speed = 0.05;
-        pacmanX += (mouseX - pacmanX) * speed;
-        pacmanY += (mouseY - pacmanY) * speed;
+        // Smooth follow with easing
+        pacmanX += (mouseX - pacmanX) * 0.1;
+        pacmanY += (mouseY - pacmanY) * 0.1;
 
-        pacman.style.left = (pacmanX - 75) + 'px';
-        pacman.style.top = (pacmanY - 75) + 'px';
+        // Update Pacman position
+        pacman.style.left = (pacmanX - 50) + 'px';
+        pacman.style.top = (pacmanY - 50) + 'px';
 
-        // rotate based on movement
-        const rotation = (mouseX - pacmanX) * 0.01;
-        pacman.style.transform = `rotate(${rotation}deg)`;
-
-        requestAnimationFrame(updatePacman);
+        // Rotate towards movement direction
+        const angle = Math.atan2(mouseY - pacmanY, mouseX - pacmanX);
+        pacman.style.transform = `rotate(${angle}rad)`;
     }
 
-    // Ghost movement loop
+    // Update Ghost position
     function updateGhost() {
-        // random drift
-        ghostX += (Math.random() - 0.5) * 4;
-        ghostY += (Math.random() - 0.5) * 4;
+        // Bounce around the screen
+        ghostX += ghostDirectionX * ghostSpeed;
+        ghostY += ghostDirectionY * ghostSpeed;
 
-        // keep inside viewport
-        ghostX = Math.max(60, Math.min(window.innerWidth - 60, ghostX));
-        ghostY = Math.max(60, Math.min(window.innerHeight - 60, ghostY));
-
-        ghost.style.left = (ghostX - 60) + 'px';
-        ghost.style.top = (ghostY - 60) + 'px';
-
-        // occasionally chase pacman
-        if (Math.random() < 0.02) {
-            ghostX += (pacmanX - ghostX) * 0.1;
-            ghostY += (pacmanY - ghostY) * 0.1;
+        // Bounce off walls
+        if (ghostX <= 0 || ghostX >= window.innerWidth - 80) {
+            ghostDirectionX *= -1;
+            ghostX = Math.max(0, Math.min(window.innerWidth - 80, ghostX));
         }
 
-        requestAnimationFrame(updateGhost);
+        if (ghostY <= 0 || ghostY >= window.innerHeight - 80) {
+            ghostDirectionY *= -1;
+            ghostY = Math.max(0, Math.min(window.innerHeight - 80, ghostY));
+        }
+
+        // Occasionally chase Pacman
+        if (Math.random() < 0.01) {
+            const dx = pacmanX - ghostX;
+            const dy = pacmanY - ghostY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance > 0) {
+                ghostDirectionX = dx / distance;
+                ghostDirectionY = dy / distance;
+            }
+        }
+
+        // Update ghost position
+        ghost.style.left = ghostX + 'px';
+        ghost.style.top = ghostY + 'px';
     }
 
-    // Create background particles
-    function createParticles() {
-        const particlesContainer = document.getElementById('particles');
-        const particleCount = 50;
+    // Check for food collisions
+    function checkFoodCollisions() {
+        const pacmanRect = {
+            left: pacmanX - 40,
+            right: pacmanX + 40,
+            top: pacmanY - 40,
+            bottom: pacmanY + 40
+        };
 
-        for (let i = 0; i < particleCount; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
+        for (let i = foods.length - 1; i >= 0; i--) {
+            const food = foods[i];
+            const foodRect = food.element.getBoundingClientRect();
 
-            // random position + animation
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.animationDelay = Math.random() * 8 + 's';
-            particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+            // Check collision
+            if (pacmanRect.right > foodRect.left &&
+                pacmanRect.left < foodRect.right &&
+                pacmanRect.bottom > foodRect.top &&
+                pacmanRect.top < foodRect.bottom) {
 
-            // random size
-            const size = Math.random() * 3 + 2;
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
+                // Add points
+                score += food.points;
+                scoreValue.textContent = score;
 
-            particlesContainer.appendChild(particle);
+                // Create collection effect
+                createCollectionEffect(foodRect.left + 12, foodRect.top + 12, food.points);
+
+                // Remove food
+                food.element.remove();
+                foods.splice(i, 1);
+
+                // Add new food
+                setTimeout(() => addNewFood(), 500);
+            }
         }
     }
 
-    // Init
-    createParticles();
-    updatePacman();
-    updateGhost();
+    // Create collection effect
+    function createCollectionEffect(x, y, points) {
+        const effect = document.createElement('div');
+        effect.className = 'collection-effect';
+        effect.textContent = `+${points}`;
+        effect.style.left = x + 'px';
+        effect.style.top = y + 'px';
 
-    // Small idle animation
-    setInterval(() => {
-        pacman.style.transform = 'scale(1.1)';
+        document.body.appendChild(effect);
+
+        // Remove after animation
         setTimeout(() => {
-            pacman.style.transform = 'scale(1)';
-        }, 200);
-    }, 3000);
+            effect.remove();
+        }, 500);
+    }
+
+    // Add new food
+    function addNewFood() {
+        const food = document.createElement('div');
+        const type = foodTypes[Math.floor(Math.random() * foodTypes.length)];
+
+        food.className = `food-item ${type.class}`;
+        food.innerHTML = type.emoji;
+        food.dataset.points = type.points;
+        food.dataset.type = type.class;
+
+        // Random position
+        const x = Math.random() * (window.innerWidth - 100) + 50;
+        const y = Math.random() * (window.innerHeight - 200) + 100;
+
+        food.style.left = x + 'px';
+        food.style.top = y + 'px';
+        food.style.animationDelay = Math.random() * 2 + 's';
+
+        foodContainer.appendChild(food);
+        foods.push({
+            element: food,
+            x: x,
+            y: y,
+            points: type.points
+        });
+    }
+
+    // Add some initial movement to ghost
+    ghostDirectionX = Math.random() > 0.5 ? 1 : -1;
+    ghostDirectionY = Math.random() > 0.5 ? 1 : -1;
+    ghostSpeed = 1.5 + Math.random();
 </script>
 </body>
 </html>
