@@ -24,6 +24,7 @@ Die Anwendung läuft vollständig clientseitig und speichert Daten im Browser (L
 **Hinweis:**  
 Alle Daten werden im Browser (Local Storage) gespeichert.  
 Ein Reset ist über die App oder durch Löschen des Local Storage möglich.
+
 ---
 
 ## Verwendung (User Guide)
