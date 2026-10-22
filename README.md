@@ -110,7 +110,16 @@ Ein Reset ist über die App oder durch Löschen des Local Storage möglich.
 ---
 
 ## Team
+Teamprojekt an der Hochschule Campus Wien (Wintersemester 2025/26).
+
 - Besian Alihajdaraj  
 - Vjollca Berbati  
 - Nicolas Dziwinsky  
 - David Ramberger
+
+
+### Mein Anteil (Besian)
+- Oberfläche mit Tailwind CSS aufgebaut und an die JavaScript-Logik angebunden (`UiController`, `MainService`, `Activity`)
+- Playlists, Löschen von Aktivitäten, Suche und Filter nach Dauer
+- Dark/Light-Mode, Sprachumschaltung Deutsch/Englisch, Reset-Funktion und Verlauf
+- Mobile Ansicht mit eigener Menüleiste, 404-Seite und Dokumentation
